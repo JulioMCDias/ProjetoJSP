@@ -1,0 +1,8 @@
+Criar um banco de dados MySQL denominado  
+exemplo_mvc_crud_jdbc
+
+
+Depois criar a seguinte tabela no banco:
+
+CREATE TABLE pessoa
+(id int not null primary key auto_increment, nome varchar(50), telefone varchar(20));
