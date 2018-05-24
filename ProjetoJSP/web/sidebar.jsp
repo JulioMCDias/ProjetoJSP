@@ -8,8 +8,6 @@
         response.sendRedirect("login.jsp");
     }
 %>
-              
-
     
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -46,16 +44,15 @@
 
                     <li><a><i class="fa fa-edit"></i> CADASTRO <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="cliente.jsp">Cliente</a></li>
-                            <li><a href="produto.jsp">Produto</a></li>
+                            <li><a href="cadastrar.jsp">Clientes<span class="sr-only"></span></a></li>
+                                <!-- criando o menu para o crud-->                            
+                                <ul>
+                                    <li><a href="pesquisar.jsp">Pesquisar clientes<span class="sr-only"></span></a></li>
+                                    <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>
+                                </ul>
+                            <li><a href="produto.jsp">   Produto</a>   </li>
                             <li><a href="fornecedor.jsp">Fornecedor</a></li>
-                            <li><a href="usuario.jsp">Usuário</a></li>
-                            <!-- criando o menu para o crud-->                            
-                            <br><br>
-                            <li><a href="cadastrar.jsp">Cadastrar Pessoas<span class="sr-only"></span></a></li>
-                            <li><a href="pesquisar.jsp">Pesquisar Pessoas<span class="sr-only"></span></a></li>
-                            <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>
-                            
+                            <li><a href="usuario.jsp">   Usuário</a>   </li>
                         </ul>
                     </li>
                     <li><a href="./Sair"><i class="fa fa-power-off"></i> SAIR </a>

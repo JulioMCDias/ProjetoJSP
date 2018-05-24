@@ -4,17 +4,55 @@
 package bean;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Classe Bean da Pessoa
  */
 public class Pessoa implements Serializable {
 
-    // Atributos da classe
+   // Atributos da classe
     private int id;
     private String nome;
+    private String ultnome;
+    private String nomemeio;
+    private String genero;
     private String telefone;
+    private String datanasc;
 
+    public String getUltnome() {
+        return ultnome;
+    }
+
+    public void setUltnome(String ultnome) {
+        this.ultnome = ultnome;
+    }
+
+    public String getNomemeio() {
+        return nomemeio;
+    }
+
+    public void setNomemeio(String nomemeio) {
+        this.nomemeio = nomemeio;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getDatanasc() {
+        return datanasc;
+    }
+
+    public void setDatanasc(String datanasc) {
+        this.datanasc = datanasc;
+    }
+    
+    
     // Método construtor
     public Pessoa() {
     }

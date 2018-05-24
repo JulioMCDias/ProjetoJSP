@@ -1,7 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="bean.Pessoa"%>
 <%@page import="java.util.ArrayList"%>
-
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
@@ -34,7 +33,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome</th>
+                                    <th>Ultimo Nome</th>
+                                    <th>Nome Meio</th>
+                                    <th>Genero</th>
                                     <th>Telefone</th>
+                                    <th>Data Nascimento</th>
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
@@ -46,22 +49,27 @@
                                      * do atributo listaPessoas originado do
                                      * servlet Controle
                                      */
+                                    
                                     List<Pessoa> pessoas = (ArrayList) request.getAttribute("listaPessoas");
 
                                     // Percorre a lista dos registros e apresenta no navegador
                                     for (Pessoa p : pessoas) {
                                 %>
-
                                 <tr>
                                     <td><%=p.getId()%></td>
                                     <td><%=p.getNome()%></td>
+                                    <td><%=p.getUltnome()%></td>
+                                    <td><%=p.getNomemeio()%></td>
+                                    <td><%=p.getGenero()%></td>
                                     <td><%=p.getTelefone()%></td>
+                                    <td><%=p.getDatanasc()%></td>
+
                                     <td><a href="Controle?acao=editar&id=<%=p.getId()%>">&nbsp;Editar</a></td>
                                     <td><a href="Controle?acao=excluir&id=<%=p.getId()%>">&nbsp;Excluir</a></td>
                                 </tr>
                                 <%
                                     } // Fim do laço de repetição
-%>
+                                %>
                         </table>
                     </div>
                 </div>
