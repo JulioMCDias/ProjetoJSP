@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 import model.PessoaDAO;
 
 /**
@@ -46,8 +48,11 @@ public class Controle extends HttpServlet {
 
             // Atribui os valores do fomulário ao objeto criado
             p.setNome(request.getParameter("nome"));
+            p.setUltnome(request.getParameter("last-name"));
+            p.setNomemeio(request.getParameter("middle-name"));
+            p.setGenero(request.getParameter("gender")); 
             p.setTelefone(request.getParameter("telefone"));
-
+            p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
             // Tratamento de erro para a conexão com o banco de dados
             try {
                 // Cria uma instância do model - PessoaDAO
@@ -364,5 +369,9 @@ public class Controle extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private Object SimpleDateFormat(String ddMMyyyy) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

@@ -8,8 +8,6 @@
         response.sendRedirect("login.jsp");
     }
 %>
-              
-
     
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -48,14 +46,21 @@
                         <ul class="nav child_menu">
                             <li><a href="cadastrarCliente.jsp">Cliente</a></li>
                             <li><a href="cadastrarProduto.jsp">Produto</a></li>
-                            <!--<li><a href="fornecedor.jsp">Fornecedor</a></li>-->
+                            <li><a href="fornecedor.jsp">Fornecedor</a></li>
                             <li><a href="cadastrarUsuario.jsp">Usuário</a></li>
                             <!-- criando o menu para o crud-->                            
                             <br><br>
-                           <!-- <li><a href="cadastrar.jsp">Cadastrar Pessoas<span class="sr-only"></span></a></li>
+                       <!-- <li><a href="cadastrar.jsp">Cadastrar Pessoas<span class="sr-only"></span></a></li>
                             <li><a href="pesquisar.jsp">Pesquisar Pessoas<span class="sr-only"></span></a></li>
                             <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>-->
-                            
+
+                            <li><a href="cadastrar.jsp">Clientes<span class="sr-only"></span></a></li>
+                                <!-- criando o menu para o crud-->                            
+                                <ul>
+                                    <li><a href="pesquisar.jsp">Pesquisar clientes<span class="sr-only"></span></a></li>git 
+                                    <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>
+                                </ul>
+                            <li><a href="produto.jsp">Produto</a>   </li>
                         </ul>
                     </li>
                     <li><a href="./Sair"><i class="fa fa-power-off"></i> SAIR </a>

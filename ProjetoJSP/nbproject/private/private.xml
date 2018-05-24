@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/julio/Git/ProjetoJSP/ProjetoJSP/web/cadastrar.jsp</file>
+            <file>file:/home/julio/Git/ProjetoJSP/ProjetoJSP/src/java/Servlets/Logar.java</file>
+            <file>file:/home/julio/Git/ProjetoJSP/ProjetoJSP/web/sidebar.jsp</file>
+            <file>file:/home/julio/Git/ProjetoJSP/ProjetoJSP/web/login.jsp</file>
+        </group>
     </open-files>
 </project-private>

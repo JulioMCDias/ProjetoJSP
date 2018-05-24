@@ -6,11 +6,6 @@
 package Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +37,7 @@ public class Logar extends HttpServlet {
             HttpSession session = request.getSession();
 
             if (login.equals("admin") && senha.equals("admin")) {
-                response.sendRedirect("cadastrarCliente.jsp");
+                response.sendRedirect("cadastrar.jsp");
                 session.setAttribute("usuario", login);
                 session.setMaxInactiveInterval(60 * 5);
 
