@@ -46,15 +46,15 @@
 
                     <li><a><i class="fa fa-edit"></i> CADASTRO <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="cliente.jsp">Cliente</a></li>
-                            <li><a href="produto.jsp">Produto</a></li>
-                            <li><a href="fornecedor.jsp">Fornecedor</a></li>
-                            <li><a href="usuario.jsp">Usuário</a></li>
+                            <li><a href="cadastrarCliente.jsp">Cliente</a></li>
+                            <li><a href="cadastrarProduto.jsp">Produto</a></li>
+                            <!--<li><a href="fornecedor.jsp">Fornecedor</a></li>-->
+                            <li><a href="cadastrarUsuario.jsp">Usuário</a></li>
                             <!-- criando o menu para o crud-->                            
                             <br><br>
-                            <li><a href="cadastrar.jsp">Cadastrar Pessoas<span class="sr-only"></span></a></li>
+                           <!-- <li><a href="cadastrar.jsp">Cadastrar Pessoas<span class="sr-only"></span></a></li>
                             <li><a href="pesquisar.jsp">Pesquisar Pessoas<span class="sr-only"></span></a></li>
-                            <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>
+                            <li><a href="Controle?acao=listar">Listar Todos<span class="sr-only"></span></a></li>-->
                             
                         </ul>
                     </li>

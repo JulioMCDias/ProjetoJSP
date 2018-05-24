@@ -47,11 +47,11 @@
                                 <div>
                                     <h1><i class="fa fa-paw"></i> Sistema JSP!</h1>
                                     <p>Sistema JSP! Criado por:</p>
-                                    <p>Francisco Renato Severiano<br>Julio Marques Correa Dias<br>Rafael Almeida</p>
+                                    <p>Francisco Renato Severiano<br>Julio Marques Correa Dias<br>Rafael Pinheiro</p>
                                 </div>
                             </div>
                         </form>
-                        <%session.setAttribute("user", "Daniel");%>
+                        <%session.setAttribute("user", "Admin");%>
                     </section>
                 </div>
 
