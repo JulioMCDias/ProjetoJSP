@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +68,7 @@ public class Controle extends HttpServlet {
                  * enviar para a página de mensagem
                  */
                 request.setAttribute("mensagem", resultado);
-                response.setHeader("Refresh", "2; url=\"cadastrar.jsp\"");
+                response.setHeader("Refresh", "2; url=\"v_cadastrarCliente.jsp\"");
 
             } catch (SQLException e) {
                 /**
@@ -82,7 +81,7 @@ public class Controle extends HttpServlet {
             }
 
             // Redireciona para a página de mensagem
-            RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+            RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
             redireciona.forward(request, response);
         }
 
@@ -114,14 +113,14 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Nenhuma ocorrência localizada!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 } else {
                     // Criar um atributo para o objeto request
                     request.setAttribute("listaPessoas", pessoas);
 
                     // Redireciona para a página de mensagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("listagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_lista.jsp");
                     redireciona.forward(request, response);
                 }
 
@@ -133,7 +132,7 @@ public class Controle extends HttpServlet {
                 if (e.getErrorCode() == 0) {
                     request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
                     // Redirecionar para uma saída (view)
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 }
             }
@@ -163,7 +162,7 @@ public class Controle extends HttpServlet {
                 request.setAttribute("listaPessoas", pessoas);
 
                 // Redireciona para a página de edição (formulário)
-                RequestDispatcher redireciona = request.getRequestDispatcher("editar.jsp");
+                RequestDispatcher redireciona = request.getRequestDispatcher("v_editarCliente.jsp");
                 redireciona.forward(request, response);
 
             } catch (SQLException e) {
@@ -175,7 +174,7 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 }
             }
@@ -208,7 +207,7 @@ public class Controle extends HttpServlet {
                 response.setHeader("Refresh", "2; url=\"Controle?acao=listar\"");
 
                 // Redireciona para a página de mensagem 
-                RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                 redireciona.forward(request, response);
 
             } catch (SQLException e) {
@@ -220,7 +219,7 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 }
             }
@@ -245,14 +244,14 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Não há registros para serem exibidos!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 } else {
                     // Cria um atributo para o objeto request e passa a lista
                     request.setAttribute("listaPessoas", pessoas);
 
                     // Redireciona para a página de listagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("listagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_lista.jsp");
                     redireciona.forward(request, response);
                 }
             } catch (SQLException e) {
@@ -265,7 +264,7 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 }
             }
@@ -300,7 +299,7 @@ public class Controle extends HttpServlet {
                 request.setAttribute("mensagem", mensagem);
 
                 // Redireciona para a página de mensagem 
-                RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                 redireciona.forward(request, response);
 
             } catch (SQLException e) {
@@ -312,7 +311,7 @@ public class Controle extends HttpServlet {
                     request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("v_mensagem.jsp");
                     redireciona.forward(request, response);
                 }
             }
