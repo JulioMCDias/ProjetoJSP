@@ -20,6 +20,36 @@ public class Pessoa implements Serializable {
     private String telefone;
     private String datanasc;
 
+
+    // Método construtor
+    public Pessoa() {
+    }
+
+    // Métodos getters e setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+    
     public String getUltnome() {
         return ultnome;
     }
@@ -51,35 +81,4 @@ public class Pessoa implements Serializable {
     public void setDatanasc(String datanasc) {
         this.datanasc = datanasc;
     }
-    
-    
-    // Método construtor
-    public Pessoa() {
-    }
-
-    // Métodos getters e setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
 }

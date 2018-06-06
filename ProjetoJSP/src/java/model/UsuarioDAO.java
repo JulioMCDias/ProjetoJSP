@@ -1,9 +1,9 @@
 /**
- * model/PessoaDAO.java
+ * model/UsuarioDAO.java
  */
 package model;
 
-import bean.Pessoa;
+import bean.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +13,10 @@ import java.util.List;
 import utils.ConnectionFactory; 
 
 /**
- * Classe Model para o objeto Pessoa (CRUD)
+ * Classe Model para o objeto Usuario (CRUD)
  */
-public class PessoaDAO {
-
+public class UsuarioDAO {
+    
     // Variável para receber a conexão do banco de dados
     private final Connection conexao;
 
@@ -25,7 +25,7 @@ public class PessoaDAO {
      *
      * @throws java.sql.SQLException
      */
-    public PessoaDAO() throws SQLException {
+    public UsuarioDAO() throws SQLException {
         // Recebe a conexão com o banco de dados
         this.conexao = ConnectionFactory.getInstance().getConnection();
     }
@@ -33,26 +33,22 @@ public class PessoaDAO {
     /**
      * Método inserir - Insere um novo registro no banco de dados
      *
-     * @param p Objeto Pessoa
+     * @param u Objeto Pessoa
      * @return String Mensagem de sucesso ou erro na inclusão
      * @throws SQLException
      */
-    public String inserir(Pessoa p) throws SQLException {
+    public String inserir(Usuario u) throws SQLException {
 
         // Instrução SQL para inclusão do registro
-        String sql = "INSERT INTO clientes (nome, ultnome, nomemeio,genero,telefone,datanasc) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)";
 
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
-                ps.setString(1, p.getNome());
-                ps.setString(2, p.getUltnome());
-                ps.setString(3, p.getNomemeio());
-                ps.setString(4, p.getGenero());
-                ps.setString(5, p.getTelefone());
-                ps.setString(6, p.getDatanasc());
+                ps.setString(1, u.getUsuario());
+                ps.setString(2, u.getSenha());
                         
                 // Executa a instrução de inclusão do registro
                 ps.execute();
@@ -74,24 +70,24 @@ public class PessoaDAO {
     /**
      * Método editar - Retorna o registro solicitado para edição
      *
-     * @param p Objeto Pessoa
+     * @param u Objeto Usuário
      * @return List Lista o registro encontrado
      * @throws java.sql.SQLException
      */
-    public List<Pessoa> editar(Pessoa p) throws SQLException {
+    public List<Usuario> editar(Usuario u) throws SQLException {
 
         // Instrução SQL para recuperar o registro
-        String sql = "SELECT * FROM clientes "
+        String sql = "SELECT * FROM usuarios "
                 + "WHERE id = ?";
 
         // Lista para receber o registro recuperado
-        List lstPessoa = new ArrayList();
+        List lstUsuario = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
 
             // Inclui o id informado à instrução SQL
-            ps.setInt(1, p.getId());
+            ps.setInt(1, u.getId());
 
             // Avança o registro para recuperar os dados retornados do banco de dados
             try ( // Objeto que armazenará os dados recuperados (ResultSet)
@@ -103,21 +99,17 @@ public class PessoaDAO {
                  */
                 rs.next();
 
-                // Cria um objeto Pessoa
-                p = new Pessoa();
+                // Cria um objeto Usuário
+                u = new Usuario();
 
-                // Atribui ao objeto Pessoa os valores retornados do banco
+                // Atribui ao objeto Usuário os valores retornados do banco
 
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setUltnome(rs.getString("ultnome"));
-                p.setNomemeio(rs.getString("nomemeio"));
-                p.setGenero(rs.getString("genero"));
-                p.setDatanasc(rs.getString("datanasc"));
-                p.setTelefone(rs.getString("telefone"));
-
-                // Adiciona o objeto pessoa na lista
-                lstPessoa.add(p);
+                u.setId(rs.getInt("id"));
+                u.setUsuario(rs.getString("usuario"));
+                u.setSenha(rs.getString("senha"));
+                
+                // Adiciona o objeto usuario na lista
+                lstUsuario.add(u);
             }
         }
 
@@ -125,20 +117,20 @@ public class PessoaDAO {
         conexao.close();
 
         // Retorna a lista com o registro solicitado
-        return lstPessoa;
+        return lstUsuario;
     }
 
     /**
      * Método excluir - Realiza a exclusão de um registro pelo ID informado
      *
-     * @param p Objeto Pessoa
+     * @param u Objeto Usuário
      * @return String Mensagem de sucesso ou erro na exclusão
      * @throws java.sql.SQLException
      */
-    public String excluir(Pessoa p) throws SQLException {
+    public String excluir(Usuario u) throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "DELETE FROM clientes "
+        String sql = "DELETE FROM usuarios "
                 + "WHERE id = ?;";
 
         try {
@@ -146,7 +138,7 @@ public class PessoaDAO {
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui o valor informado a ser atribuido à instrução SQL
-                ps.setInt(1, p.getId());
+                ps.setInt(1, u.getId());
 
                 // Executa a exclusão
                 ps.executeUpdate();
@@ -170,13 +162,13 @@ public class PessoaDAO {
      * Método alterar - Realiza a gravação (alteração) do registro no banco de
      * dados
      *
-     * @param p Objeto Pessoa
+     * @param u Objeto Usuário
      * @return Mensagem de sucesso ou erro na alteração (salvamento do registro)
      */
-    public String alterar(Pessoa p) {
+    public String alterar(Usuario u) {
         // Instrução SQL para atualização do registro
-        String sql = "UPDATE clientes SET "
-                + "nome = ?, ultnome = ?, nomemeio = ?, genero = ?, telefone = ?, datanasc = ? "
+        String sql = "UPDATE usuarios SET "
+                + "usuario = ?, senha = ? "
                 + "WHERE id = ?;";
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -184,13 +176,9 @@ public class PessoaDAO {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
                 
-                ps.setString(1, p.getNome());
-                ps.setString(2, p.getUltnome());
-                ps.setString(3, p.getNomemeio());
-                ps.setString(4, p.getGenero());
-                ps.setString(5, p.getTelefone());
-                ps.setString(6, p.getDatanasc());
-                ps.setInt(7, p.getId());
+                ps.setString(1, u.getUsuario());
+                ps.setString(2, u.getSenha());
+                ps.setInt(3, u.getId());
                 
                 // Executa a instrução de atualização do registro
                 ps.executeUpdate();
@@ -212,23 +200,23 @@ public class PessoaDAO {
     /**
      * Método Pesquisar - Realiza a pesquisa de um registro específico pelo ID
      *
-     * @param p Objeto Pessoa
+     * @param u Objeto Usuario
      * @return List Lista com registros encontrados
      * @throws java.sql.SQLException
      */
-    public List<Pessoa> pesquisar(Pessoa p) throws SQLException {
+    public List<Usuario> pesquisar(Usuario u) throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT * FROM clientes "
-                + "WHERE nome like ? ORDER BY ID ASC;";
+        String sql = "SELECT * FROM usuarios "
+                + "WHERE usuario like ? ORDER BY ID ASC;";
 
         // Lista para receber os registros recuperados
-        List lstPessoas = new ArrayList();
+        List lstUsuario = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
             // Inclui o valor informado a ser atribuido à instrução SQL
-            ps.setString(1, p.getNome());
+            ps.setString(1, u.getUsuario());
 
             try ( // Objeto que armazenará os dados recuperados (recordSet)
                     ResultSet rs = ps.executeQuery()) {
@@ -237,20 +225,17 @@ public class PessoaDAO {
                  * lista
                  */
                 while (rs.next()) {
-                    // Cria um objeto Pessoa (bean)
-                    p = new Pessoa();
+                    // Cria um objeto Usuario (bean)
+                    u = new Usuario();
 
-                    // Atribui ao objeto Pessoa os valores retornados do banco
-                    p.setId(rs.getInt("id"));
-                    p.setNome(rs.getString("nome"));
-                    p.setUltnome(rs.getString("ultnome"));
-                    p.setNomemeio(rs.getString("nomemeio"));
-                    p.setGenero(rs.getString("genero"));
-                    p.setTelefone(rs.getString("telefone"));
-                    p.setDatanasc(rs.getString("datanasc"));
+                    // Atribui ao objeto Usuario os valores retornados do banco
+                    u.setId(rs.getInt("id"));
+                    u.setUsuario(rs.getString("usuario"));
+                    u.setSenha(rs.getString("senha"));
+                    
 
-                    // Adiciona o objeto Pessoa na lista de pessoas
-                    lstPessoas.add(p);
+                    // Adiciona o objeto Usuario na lista de usuarios
+                    lstUsuario.add(u);
                 }
             }
         }
@@ -258,8 +243,8 @@ public class PessoaDAO {
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as pessoas encontradas
-        return lstPessoas;
+        // Retorna a lista com as usuarios encontradas
+        return lstUsuario;
     }
 
     /**
@@ -269,13 +254,13 @@ public class PessoaDAO {
      * @throws java.sql.SQLException
      *
      */
-    public List<Pessoa> listar() throws SQLException {
+    public List<Usuario> listar() throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT * FROM clientes ORDER BY nome ASC;";
+        String sql = "SELECT * FROM usuarios ORDER BY usuario ASC;";
 
         // Lista para receber os registros recuperados
-        List lstPessoas = new ArrayList();
+        List lstUsuario = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql);
@@ -283,30 +268,27 @@ public class PessoaDAO {
                 ResultSet rs = ps.executeQuery()) {
             /**
              * Percorre os registros retornados do banco de dados e coloca em
-             * uma lista (lstPessoas)
+             * uma lista (lstUsuario)
              */
             while (rs.next()) {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Usuario
+                Usuario u = new Usuario();
 
-                // Atribui ao objeto Pessoa os valores retornados do banco
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setUltnome(rs.getString("ultnome"));
-                p.setNomemeio(rs.getString("nomemeio"));
-                p.setGenero(rs.getString("genero"));
-                p.setTelefone(rs.getString("telefone"));
-                p.setDatanasc(rs.getString("datanasc"));
+                // Atribui ao objeto Usuario os valores retornados do banco
+                u.setId(rs.getInt("id"));
+                u.setUsuario(rs.getString("usuario"));
+                u.setSenha(rs.getString("senha"));
+                
 
-                // Adiciona o objeto Pessoa na lista de pessoas
-                lstPessoas.add(p);
+                // Adiciona o objeto usuario na lista de usuarios
+                lstUsuario.add(u);
             }
         }
 
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as pessoas encontradas
-        return lstPessoas;
+        // Retorna a lista com as usuarios encontradas
+        return lstUsuario;
     }
 }

@@ -1,8 +1,10 @@
+    <title>Sistema JSP</title>
+    
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome 
+    
+    <!-- Font Awesome --> 
     <link href="css/font-awesome.min.css" rel="stylesheet">
-    -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <!-- NProgress -->
@@ -10,3 +12,8 @@
 
     <!-- Custom Theme Style -->
     <link href="css/custom.min.css" rel="stylesheet">
+    
+    <!-- DataTables Theme Style -->
+    <link rel="stylesheet" type="text/css" href="datatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="datatables/css/responsive.jqueryui.min.css">
+    <link rel="stylesheet" type="text/css" href="datatables/css/select.jqueryui.min.css">
