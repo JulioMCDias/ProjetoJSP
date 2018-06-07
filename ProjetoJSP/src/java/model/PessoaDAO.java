@@ -40,7 +40,7 @@ public class PessoaDAO {
     public String inserir(Pessoa p) throws SQLException {
 
         // Instrução SQL para inclusão do registro
-        String sql = "INSERT INTO clientes (nome, ultnome, nomemeio,genero,telefone,datanasc) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO clientes (nome, CPF, endereco,genero,telefone,datanasc) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -48,8 +48,8 @@ public class PessoaDAO {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
                 ps.setString(1, p.getNome());
-                ps.setString(2, p.getUltnome());
-                ps.setString(3, p.getNomemeio());
+                ps.setString(2, p.getCPF());
+                ps.setString(3, p.getEndereco());
                 ps.setString(4, p.getGenero());
                 ps.setString(5, p.getTelefone());
                 ps.setString(6, p.getDatanasc());
@@ -110,8 +110,8 @@ public class PessoaDAO {
 
                 p.setId(rs.getInt("id"));
                 p.setNome(rs.getString("nome"));
-                p.setUltnome(rs.getString("ultnome"));
-                p.setNomemeio(rs.getString("nomemeio"));
+                p.setCPF(rs.getString("CPF"));
+                p.setEndereco(rs.getString("endereco"));
                 p.setGenero(rs.getString("genero"));
                 p.setDatanasc(rs.getString("datanasc"));
                 p.setTelefone(rs.getString("telefone"));
@@ -176,7 +176,7 @@ public class PessoaDAO {
     public String alterar(Pessoa p) {
         // Instrução SQL para atualização do registro
         String sql = "UPDATE clientes SET "
-                + "nome = ?, ultnome = ?, nomemeio = ?, genero = ?, telefone = ?, datanasc = ? "
+                + "nome = ?, CPF = ?, endereco = ?, genero = ?, telefone = ?, datanasc = ? "
                 + "WHERE id = ?;";
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -185,8 +185,8 @@ public class PessoaDAO {
                 // Inclui os valores a serem atribuidos à instrução SQL
                 
                 ps.setString(1, p.getNome());
-                ps.setString(2, p.getUltnome());
-                ps.setString(3, p.getNomemeio());
+                ps.setString(2, p.getCPF());
+                ps.setString(3, p.getEndereco());
                 ps.setString(4, p.getGenero());
                 ps.setString(5, p.getTelefone());
                 ps.setString(6, p.getDatanasc());
@@ -243,8 +243,8 @@ public class PessoaDAO {
                     // Atribui ao objeto Pessoa os valores retornados do banco
                     p.setId(rs.getInt("id"));
                     p.setNome(rs.getString("nome"));
-                    p.setUltnome(rs.getString("ultnome"));
-                    p.setNomemeio(rs.getString("nomemeio"));
+                    p.setCPF(rs.getString("CPF"));
+                    p.setEndereco(rs.getString("endereco"));
                     p.setGenero(rs.getString("genero"));
                     p.setTelefone(rs.getString("telefone"));
                     p.setDatanasc(rs.getString("datanasc"));
@@ -292,8 +292,8 @@ public class PessoaDAO {
                 // Atribui ao objeto Pessoa os valores retornados do banco
                 p.setId(rs.getInt("id"));
                 p.setNome(rs.getString("nome"));
-                p.setUltnome(rs.getString("ultnome"));
-                p.setNomemeio(rs.getString("nomemeio"));
+                p.setCPF(rs.getString("CPF"));
+                p.setEndereco(rs.getString("endereco"));
                 p.setGenero(rs.getString("genero"));
                 p.setTelefone(rs.getString("telefone"));
                 p.setDatanasc(rs.getString("datanasc"));

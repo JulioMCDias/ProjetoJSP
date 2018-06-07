@@ -1,45 +1,41 @@
-<script>
-function formatar(mascara, documento){
-  var i = documento.value.length;
-  var saida = mascara.substring(0,1);
-  var texto = mascara.substring(i)
-  
-  if (texto.substring(0,1) != saida){
-            documento.value += texto.substring(0,1);
-  }
-  
-}
-</script>
-<!------------------------------------ MODAL CADASTRAR ------------------------------------>
-<div id="ModalCadastrarCliente" class="modal fade" role="dialog">
+<!------------------------------------ MODAL EDITAR ------------------------------------>
+<div id="ModalEditarCliente" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Cadastrar</h4>
+                <h4 class="modal-title">Editar</h4>
             </div>
             <div class="modal-body">
                 <form name="form_mvc" class="form-horizontal" action="ControleCliente" method="post">
                     <fieldset>
+                        
+                        <div class="form-group">
+                            <label for="inputId" class="col-lg-2 control-label">ID</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" id="inputId" name="id" value="" readonly>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="inputNome" class="col-lg-2 control-label">Nome</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputNome" name="nome" onKeypress="return letras(event)" placeholder="Digite seu nome" value="" class="form-control" required>
+                                <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Digite seu nome" value="">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputUltNome" class="col-lg-2 control-label">CPF</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputUltNome" name="CPF"  OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu CPF" value="" class="form-control" required>
+                                <input type="text" id="inputUltNome" name="CPF" placeholder="Digite seu CPF" value="" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputNomeMeio" class="col-lg-2 control-label">Endereço</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputNomeMeio" name="endereco"  placeholder="Digite seu endereco" value="" class="form-control" required>
+                                <input type="text" id="inputNomeMeio" name="endereco" placeholder="Digite seu endereco" value="" class="form-control">
                             </div>
                         </div>
 
@@ -48,10 +44,10 @@ function formatar(mascara, documento){
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div id="gender" class="btn-group" data-toggle="buttons">
                                     <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" name="gender" value="Masculino" data-parsley-multiple="gender" required> &nbsp; Masculino &nbsp;
+                                        <input type="radio" id="inputGenero" name="gender" value="Masculino" data-parsley-multiple="gender" required>&nbsp; Masculino &nbsp;
                                     </label>
                                     <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" name="gender" value="Feminino" data-parsley-multiple="gender" required> Feminino
+                                        <input type="radio" id="inputGenero" name="gender" value="Feminino" data-parsley-multiple="gender" required> Feminino
                                     </label>
                                 </div>
                             </div>
@@ -60,7 +56,7 @@ function formatar(mascara, documento){
                         <div class="form-group">
                             <label for="inputDataNasc" class="col-lg-2 control-label">Data de Nascimento</label>
                             <div class="col-lg-5">
-                                <input type="date" id="inputDataNasc" name="datanasci" max="2999-12-31" placeholder="Digite sua data de nascimento" value="" class="form-control" required>
+                                <input type="date" id="inputDataNasc" name="datanasci" placeholder="Digite sua data de nascimento" value="" class="form-control">
                             </div>
                         </div>
 
@@ -72,13 +68,12 @@ function formatar(mascara, documento){
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" name="acao" id="btn-cadastrar" class="btn btn-primary" value="cadastrar" data-content="remove">Cadastrar</button>
-                        <button class="btn btn-info" type="reset">Limpar</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    </div>
+                        <button type="submit" name="acao" class="btn btn-primary" value="alterar">Salvar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>                            
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!------------------------------------ FIM MODAL CADASTRAR ------------------------------------>
+<!------------------------------------ FIM MODAL EDITAR ------------------------------------>

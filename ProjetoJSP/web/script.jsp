@@ -52,6 +52,8 @@
     });
 </script> <!-- Fim Function DataTables -->
 
+
+<!--==============================Cliente==============================================-->
 <script>
     $('#ModalEditarCliente').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget);
@@ -89,13 +91,14 @@
 });
 </script>
 
-<!--===============================================================================================================================-->
+<!--============================================Usuario===================================================================================-->
 
 <script>
     $('#ModalEditarUsuario').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget);
   var recipientId = button.data('id');
   var recipientUsuario = button.data('usuario');
+  var recipientCargo = button.data('cargo');
   var recipientSenha = button.data('senha');
   
 //-------------------------------------------------------------------------
@@ -103,6 +106,7 @@
   var modal = $(this);
   modal.find('.modal-body #inputId').val(recipientId);
   modal.find('.modal-body #inputUser').val(recipientUsuario);
+  modal.find('.modal-body #inputCargo').val(recipientCargo);
   modal.find('.modal-body #inputSenha').val(recipientSenha);
   
 });
@@ -120,3 +124,4 @@
   
 });
 </script>
+

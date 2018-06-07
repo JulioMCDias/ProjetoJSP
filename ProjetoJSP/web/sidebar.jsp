@@ -1,4 +1,5 @@
 <%
+    String typeUse = (String) session.getAttribute("typeUser");
     try {
         String user = (String) session.getAttribute("usuario");
         if (user.equals("")) {
@@ -12,7 +13,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="index.jsp" class="site_title"><i class="fa fa-paw"></i> <span>Sistema JSP</span></a>
+            <a href="index.jsp" class="site_title"><i class="fa fa-paw"></i> <span>Projeto JSP</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -43,12 +44,20 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-edit"></i> CADASTRO <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="ControleCliente?acao=listar">CLIENTES</a></li>
-                            <li><a href="ControleUsuario?acao=listar">USUÁRIOS</a></li>
-                            <!--<li><a href="produto.jsp">Produtos</a></li>-->
-                            <!--<li><a href="item.jsp">Itens</a></li>-->
+                            <%if(typeUse.equals("admin") || typeUse.equals("vendedor")){%>
+                            <li><a href="ControleCliente?acao=listar">Clientes</a></li>
+                            <%}if(typeUse.equals("admin") || typeUse.equals("checagem")){%>
+                            <li><a href="ControleProduto?acao=listar">Produtos</a></li>
+                            <%}if(typeUse.equals("admin")){%>
+                            <li><a href="ControleUsuario?acao=listar">Funcionarios</a></li>
+                            <%}%> 
                         </ul>
                     </li>
+                    <%if(typeUse.equals("admin")|| typeUse.equals("vendedor")){%>
+                    <li><a href="ControleCliente?acao=listar">
+                            <i class="fa  fa-shopping-cart"></i> COMPRA <span class="fa fa-shopping-cart"></span>
+                    </a></li>
+                    <%}%> 
                     <li><a href="./Sair"><i class="fa fa-power-off"></i> SAIR </a>
 
                     </li>

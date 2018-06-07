@@ -28,68 +28,6 @@
                 </li>
 
                 <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 minutos atrás</span>
-                        </span>
-                        <span class="message">
-                          Os festivais de cinema costumavam ser momentos de fazer ou morrer para os cineastas. Eles estavam onde...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 minutos atrás</span>
-                        </span>
-                        <span class="message">
-                           Os festivais de cinema costumavam ser momentos de fazer ou morrer para os cineastas. Eles estavam onde...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 minutos atrás</span>
-                        </span>
-                        <span class="message">
-                           Os festivais de cinema costumavam ser momentos de fazer ou morrer para os cineastas. Eles estavam onde...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 minutos atrás</span>
-                        </span>
-                        <span class="message">
-                           Os festivais de cinema costumavam ser momentos de fazer ou morrer para os cineastas. Eles estavam onde...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>Ver Todos</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
                 </li>
               </ul>
             </nav>

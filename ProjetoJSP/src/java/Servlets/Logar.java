@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import bean.TipoUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.TiopUsuarioDAO;
+import model.UsuarioDAO;
 
 /**
  *
@@ -73,22 +78,31 @@ public class Logar extends HttpServlet {
               {
                 Class.forName("com.mysql.jdbc.Driver").newInstance(); 
                 Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/cruddb","root","");
-                String sql = "SELECT * FROM usuarios WHERE usuario=? and senha=?";   
+                String sql = "SELECT tipoUsuario.nome FROM usuarios INNER JOIN tipoUsuario "
+                        + "ON usuarios.tipoUsuarioId = tipoUsuario.id "
+                        + "WHERE usuarios.usuario=? and usuarios.senha=?";   
                 PreparedStatement psm = conn.prepareStatement(sql);
                 psm.setString(1, login);
                 psm.setString(2, senha);
                 ResultSet rs=psm.executeQuery();
+                
                 if(rs.next())
                 {
-                  response.sendRedirect("index.jsp");
-                  session.setAttribute("usuario", login);
-                  session.setMaxInactiveInterval(60 * 24);
+                    session.setAttribute("typeUser",rs.getString("nome"));
+                    response.sendRedirect("index.jsp");
+                    session.setAttribute("usuario", login);
+                    session.setMaxInactiveInterval(60 * 24);
+                    
+                    TiopUsuarioDAO uDao = new TiopUsuarioDAO();
+                    List tiposUsuario = new ArrayList();
+                    tiposUsuario = uDao.listar();
+                    session.setAttribute("listaTipoUser", tiposUsuario); 
                 } 
                 else 
                 {
-                  response.sendRedirect("login.jsp");
-                  //out.println("Falha ao logar! Tente novamente");
-                  session.setAttribute("usuario", "");
+                    response.sendRedirect("login.jsp");
+                    //out.println("Falha ao logar! Tente novamente");
+                    session.setAttribute("usuario", "");
                 }
               }
             } 

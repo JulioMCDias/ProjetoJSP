@@ -7,7 +7,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Listagem de Funcionarios</h3>
+                <h3>Listagem dos Produtos</h3>
             </div>
 
             <div class="title_right">
@@ -31,8 +31,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome</th>
-                                    <th>cargo</th>
-                                    <th>Senha</th>
+                                    <th>Discrição</th>
+                                    <th>Quantidade</th>
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
@@ -45,6 +45,7 @@
                                      * servlet Controle
                                      */
                                     List<Usuario> usuario = (ArrayList) request.getAttribute("listaUsuario");
+
                                     // Percorre a lista dos registros e apresenta no navegador
                                     for (Usuario u : usuario) {
                                 %>
@@ -52,20 +53,18 @@
                                 <tr>
                                     <td><%=u.getId()%></td>
                                     <td><%=u.getUsuario()%></td>
-                                    <td><%=u.getCargo()%></td>
                                     <td><%=u.getSenha()%></td>
                                     
                                     <td>
-                                        <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalEditarUsuario"
+                                        <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalEditarProduto"
                                         data-Id="<%=u.getId()%>"
                                         data-Usuario="<%=u.getUsuario()%>"
-                                        data-Cargo="<%=u.getTipoUsuarioId()%>"
                                         data-Senha="<%=u.getSenha()%>">
                                             
                                         <i class="fa fa-pencil"></i>&nbsp;Editar
                                         </button>
                                     <td>
-                                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalExcluirUsuario"
+                                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalExcluir"
                                            data-Id="<%=u.getId()%>">
                                            <i class="fa fa-trash"></i>&nbsp;Excluir
                                         </button>
@@ -76,7 +75,7 @@
                                 %>
                         </table>
                         <br>
-                        <button type="button" id="btn-mymodal" class="btn btn-primary" data-toggle="modal" data-target="#ModalCadastrarUsuario"><i class="fa fa-plus"></i>&nbsp; Adicionar</button>
+                        <button type="button" id="btn-mymodal" class="btn btn-primary" data-toggle="modal" data-target="#ModalCadastrarProduto"><i class="fa fa-plus"></i>&nbsp; Adicionar</button>
                     </div>
                 </div>
             </div>

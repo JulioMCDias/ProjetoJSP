@@ -39,7 +39,7 @@ public class ControleCliente extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        
         // Verifica se o botão de cadastrar foi acionado
         if (request.getParameter("acao").contains("cadastrar")) {
 
@@ -48,8 +48,8 @@ public class ControleCliente extends HttpServlet {
 
             // Atribui os valores do fomulário ao objeto criado
             p.setNome(request.getParameter("nome"));
-            p.setUltnome(request.getParameter("last-name"));
-            p.setNomemeio(request.getParameter("middle-name"));
+            p.setCPF(request.getParameter("last-name"));
+            p.setEndereco(request.getParameter("middle-name"));
             p.setGenero(request.getParameter("gender")); 
             p.setTelefone(request.getParameter("telefone"));
             p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
@@ -126,12 +126,12 @@ public class ControleCliente extends HttpServlet {
                     request.setAttribute("listaPessoas", pessoas);
 
                     // Redireciona para a página de mensagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("v_listagemCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
                     redireciona.forward(request, response);
                 }
 
             } catch (SQLException e) {
-                /**
+                /*
                  * Cria o atributo mensagem utilizando o objeto request para
                  * enviar para a página de mensagem caso não conecte no banco
                  */
@@ -168,8 +168,8 @@ public class ControleCliente extends HttpServlet {
                 request.setAttribute("listaPessoas", pessoas);
 
                 // Redireciona para a página de edição (formulário)
-                RequestDispatcher redireciona = request.getRequestDispatcher("v_editarCliente.jsp");
-                redireciona.forward(request, response);
+                /*RequestDispatcher redireciona = request.getRequestDispatcher("v_editarCliente.jsp");
+                redireciona.forward(request, response);*/
 
             } catch (SQLException e) {
                 /**
@@ -250,14 +250,14 @@ public class ControleCliente extends HttpServlet {
                     request.setAttribute("mensagem", "Não há registros para serem exibidos!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("v_cadastrarCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("cadastrarCliente.jsp");
                     redireciona.forward(request, response);
                 } else {
                     // Cria um atributo para o objeto request e passa a lista
                     request.setAttribute("listaPessoas", pessoas);
 
                     // Redireciona para a página de listagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("v_listagemCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
                     redireciona.forward(request, response);
                 }
             } catch (SQLException e) {
@@ -286,8 +286,8 @@ public class ControleCliente extends HttpServlet {
                 // Atribui os valores do fomulário ao objeto Pessoa
                 p.setId(Integer.parseInt(request.getParameter("id")));
                 p.setNome(request.getParameter("nome"));
-                p.setUltnome(request.getParameter("last-name"));
-                p.setNomemeio(request.getParameter("middle-name"));
+                p.setCPF(request.getParameter("CPF"));
+                p.setEndereco(request.getParameter("endereco"));
                 p.setGenero(request.getParameter("gender")); 
                 p.setTelefone(request.getParameter("telefone"));
                 p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));

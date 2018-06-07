@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Jun-2018 às 17:12
--- Versão do servidor: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Generation Time: 07-Jun-2018 às 17:08
+-- Versão do servidor: 10.1.26-MariaDB
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL,
-  `nome` varchar(45) DEFAULT NULL,
-  `ultnome` varchar(45) DEFAULT NULL,
-  `nomemeio` varchar(45) DEFAULT NULL,
+  `nome` varchar(81) DEFAULT NULL,
+  `cpf` varchar(12) DEFAULT NULL,
+  `endereco` varchar(45) DEFAULT NULL,
   `genero` varchar(45) DEFAULT NULL,
   `telefone` varchar(45) DEFAULT NULL,
   `datanasc` date DEFAULT NULL
@@ -42,43 +42,47 @@ CREATE TABLE `clientes` (
 -- Extraindo dados da tabela `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `nome`, `ultnome`, `nomemeio`, `genero`, `telefone`, `datanasc`) VALUES
-(1, 'Fulano', 'Almeida', 'Santos', 'Masculino', '(11) 79876-4684', '1994-06-09');
+INSERT INTO `clientes` (`id`, `nome`, `cpf`, `endereco`, `genero`, `telefone`, `datanasc`) VALUES
+(1, 'Fulano Almeida Santos', '131.123.123', 'Rua estancia velha 200', 'Masculino', '(11) 79876-4684', '1994-06-09');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `fornecedores`
+-- Estrutura da tabela `produtos`
 --
 
-CREATE TABLE `fornecedores` (
+CREATE TABLE `produtos` (
   `id` int(11) NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
-  `telefone` varchar(45) DEFAULT NULL,
-  `endereco` varchar(45) DEFAULT NULL,
-  `cidade` varchar(45) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL,
-  `cep` varchar(45) DEFAULT NULL
+  `discricao` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `fornecedores`
+-- Extraindo dados da tabela `produtos`
 --
 
-INSERT INTO `fornecedores` (`id`, `nome`, `telefone`, `endereco`, `cidade`, `estado`, `cep`) VALUES
-(1, 'Fornecedor', '11111111111', 'Rua Lugar Nenhum', 'Sao Paulo', 'Sao Paulo', '04893134');
+INSERT INTO `produtos` (`id`, `nome`, `discricao`) VALUES
+(1, 'bloco', 'bloco de cimento');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pessoa`
+-- Estrutura da tabela `tipousuario`
 --
 
-CREATE TABLE `pessoa` (
+CREATE TABLE `tipousuario` (
   `id` int(11) NOT NULL,
-  `nome` varchar(50) DEFAULT NULL,
-  `telefone` varchar(20) DEFAULT NULL
+  `nome` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tipousuario`
+--
+
+INSERT INTO `tipousuario` (`id`, `nome`) VALUES
+(1, 'admin'),
+(2, 'vendedor'),
+(3, 'checagem');
 
 -- --------------------------------------------------------
 
@@ -88,6 +92,7 @@ CREATE TABLE `pessoa` (
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
+  `tipoUsuarioId` int(11) NOT NULL,
   `usuario` varchar(100) DEFAULT NULL,
   `senha` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -96,10 +101,10 @@ CREATE TABLE `usuarios` (
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `usuario`, `senha`) VALUES
-(1, 'admin', 'admin'),
-(2, 'Renato', '6789'),
-(3, 'Julio', '8901');
+INSERT INTO `usuarios` (`id`, `tipoUsuarioId`, `usuario`, `senha`) VALUES
+(1, 1, 'admin', 'admin'),
+(2, 2, 'Renato', '6789'),
+(3, 3, 'Julio', '8901');
 
 --
 -- Indexes for dumped tables
@@ -112,22 +117,23 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `fornecedores`
+-- Indexes for table `produtos`
 --
-ALTER TABLE `fornecedores`
+ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pessoa`
+-- Indexes for table `tipousuario`
 --
-ALTER TABLE `pessoa`
+ALTER TABLE `tipousuario`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tipoUsuarioId` (`tipoUsuarioId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -137,25 +143,35 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `fornecedores`
---
-ALTER TABLE `fornecedores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `pessoa`
+-- AUTO_INCREMENT for table `produtos`
 --
-ALTER TABLE `pessoa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `produtos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tipousuario`
+--
+ALTER TABLE `tipousuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`tipoUsuarioId`) REFERENCES `tipousuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

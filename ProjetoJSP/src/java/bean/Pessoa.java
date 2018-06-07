@@ -14,8 +14,8 @@ public class Pessoa implements Serializable {
    // Atributos da classe
     private int id;
     private String nome;
-    private String ultnome;
-    private String nomemeio;
+    private String CPF;
+    private String endereco;
     private String genero;
     private String telefone;
     private String datanasc;
@@ -50,20 +50,20 @@ public class Pessoa implements Serializable {
         this.telefone = telefone;
     }
     
-    public String getUltnome() {
-        return ultnome;
+    public String getCPF() {
+        return CPF;
     }
 
-    public void setUltnome(String ultnome) {
-        this.ultnome = ultnome;
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
     }
 
-    public String getNomemeio() {
-        return nomemeio;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setNomemeio(String nomemeio) {
-        this.nomemeio = nomemeio;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public String getGenero() {
