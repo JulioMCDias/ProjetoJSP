@@ -23,13 +23,38 @@ window.onload = function () {
 }; //---------------- FIM VALIDAÇÃO CAMPOS TELEFONE ----------------//
 
 
-//---------------- VALIDAÇÃO CAMPOS DE NOMES ----------------//
+//---------------- FUNÇÃO MÁSCARA CPF ----------------//
+function formatar(mascara, documento){
+  var i = documento.value.length;
+  var saida = mascara.substring(0,1);
+  var texto = mascara.substring(i);
+  
+  if (texto.substring(0,1) !== saida){
+            documento.value += texto.substring(0,1);
+  }  
+}
+//---------------- FIM MÁSCARA CPF ----------------//
+
+
+//---------------- VALIDAÇÃO CAMPOS DE NOME COMPLETO ----------------//
 function letras(e){
     var expressao;
-    expressao = /[a-zA-Z]/;
+    expressao = /[a-zA-Z\u00C0-\u00FF ]+/i;
     if (expressao.test(String.fromCharCode(e.keyCode))) {
         return true;
     } else{
         return false;
     };
-};//---------------- FIM VALIDAÇÃO CAMPOS DE NOMES ----------------//
+};//---------------- FIM VALIDAÇÃO CAMPOS DE NOME COMPLETO ----------------//
+
+
+//---------------- VALIDAÇÃO CAMPOS DE CPF ----------------//
+function numeros(e){
+    var expressao;
+    expressao = /^[\d-.]+$/;
+    if (expressao.test(String.fromCharCode(e.keyCode))) {
+        return true;
+    } else{
+        return false;
+    };
+};//---------------- FIM VALIDAÇÃO CAMPOS CPF ----------------//

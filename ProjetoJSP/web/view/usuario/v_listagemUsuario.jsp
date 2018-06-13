@@ -7,13 +7,13 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Listagem de Funcionarios</h3>
+                <h3>Cadastro de Usuários</h3>
             </div>
 
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                     <div class="input-group">
-
+                       <div id="marota"></div>
                     </div>
                 </div>
             </div>
@@ -22,17 +22,14 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-                    <div class="x_title">
-                        <div class="clearfix"></div>
-                    </div>
+                    
                     <div class="x_content">
                         <table id="tblList" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>cargo</th>
-                                    <th>Senha</th>
+                                    <th>Usuário</th>
+                                    <th hidden="">Senha</th>
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
@@ -45,6 +42,7 @@
                                      * servlet Controle
                                      */
                                     List<Usuario> usuario = (ArrayList) request.getAttribute("listaUsuario");
+
                                     // Percorre a lista dos registros e apresenta no navegador
                                     for (Usuario u : usuario) {
                                 %>
@@ -52,14 +50,12 @@
                                 <tr>
                                     <td><%=u.getId()%></td>
                                     <td><%=u.getUsuario()%></td>
-                                    <td><%=u.getCargo()%></td>
-                                    <td><%=u.getSenha()%></td>
+                                    <td hidden=""><%=u.getSenha()%></td>
                                     
                                     <td>
                                         <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalEditarUsuario"
                                         data-Id="<%=u.getId()%>"
                                         data-Usuario="<%=u.getUsuario()%>"
-                                        data-Cargo="<%=u.getTipoUsuarioId()%>"
                                         data-Senha="<%=u.getSenha()%>">
                                             
                                         <i class="fa fa-pencil"></i>&nbsp;Editar
@@ -76,7 +72,9 @@
                                 %>
                         </table>
                         <br>
-                        <button type="button" id="btn-mymodal" class="btn btn-primary" data-toggle="modal" data-target="#ModalCadastrarUsuario"><i class="fa fa-plus"></i>&nbsp; Adicionar</button>
+                        <button type="button" id="btn-mymodal" class="btn btn-primary" data-toggle="modal" data-target="#ModalCadastrarUsuario">
+                            <i class="fa fa-plus"></i>&nbsp; Adicionar
+                        </button>
                     </div>
                 </div>
             </div>

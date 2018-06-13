@@ -12,10 +12,8 @@ public class Usuario implements Serializable {
     
     // Atributos da classe
     private int id;
-    private int tipoUsuarioId;
     private String usuario;
     private String senha;
-    private String cargo;
     
     //método construtor
     public Usuario() {
@@ -30,15 +28,6 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public int getTipoUsuarioId() {
-        return tipoUsuarioId;
-    }
-
-    public void setTipoUsuarioId(int tipoUsuarioId) {
-        this.tipoUsuarioId = tipoUsuarioId;
-    }
-
-    
     public String getUsuario() {
         return usuario;
     }
@@ -53,14 +42,6 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
     
     

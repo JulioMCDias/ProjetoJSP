@@ -1,5 +1,5 @@
 /**
- * bean/Pessoa.java
+ * bean/Cliente.java
  */
 package bean;
 
@@ -7,25 +7,24 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * Classe Bean da Pessoa
+ * Classe Bean da Cliente
  */
-public class Pessoa implements Serializable {
+public class Cliente implements Serializable {
 
    // Atributos da classe
     private int id;
     private String nome;
-    private String CPF;
     private String endereco;
-    private String genero;
+    private String cpf;
+    private String email;
     private String telefone;
     private String datanasc;
 
 
     // Método construtor
-    public Pessoa() {
+    public Cliente() {
     }
 
-    // Métodos getters e setters
     public int getId() {
         return id;
     }
@@ -42,22 +41,6 @@ public class Pessoa implements Serializable {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-    
-    public String getCPF() {
-        return CPF;
-    }
-
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
-    }
-
     public String getEndereco() {
         return endereco;
     }
@@ -66,12 +49,28 @@ public class Pessoa implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getGenero() {
-        return genero;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getDatanasc() {
@@ -81,4 +80,8 @@ public class Pessoa implements Serializable {
     public void setDatanasc(String datanasc) {
         this.datanasc = datanasc;
     }
+
+    
+
+
 }

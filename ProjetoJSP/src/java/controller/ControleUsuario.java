@@ -20,7 +20,7 @@ import model.UsuarioDAO;
 
 /**
  *
- * Servlet Controle
+ * Servlet ControleCliente
  */
 public class ControleUsuario extends HttpServlet {
 
@@ -35,11 +35,9 @@ public class ControleUsuario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-    
-        
+
         // Verifica se o botão de cadastrar foi acionado
         if (request.getParameter("acao").contains("cadastrar")) {
 
@@ -48,7 +46,6 @@ public class ControleUsuario extends HttpServlet {
 
             // Atribui os valores do fomulário ao objeto criado
             u.setUsuario(request.getParameter("usuario"));
-            u.setCargo(request.getParameter("cargo"));
             u.setSenha(request.getParameter("senha"));
             
             
@@ -86,7 +83,104 @@ public class ControleUsuario extends HttpServlet {
             redireciona.forward(request, response);
         }
 
-      
+        // Verifica se o botão Pesquisar foi acionado
+        if (request.getParameter("acao").contains("pesquisar")) {
+            // Tratamento de erro para a conexão com o banco de dados
+            try {
+                // Cria um objeto Pessoa
+                Usuario u = new Usuario();
+
+                /**
+                 * Atribui os valores do fomulário ao objeto com o símbolo de %
+                 * para o operador LIKE
+                 */
+                u.setUsuario("%" + request.getParameter("usuario") + "%");
+
+                // Cria uma instância do model - PessoaDAO
+                UsuarioDAO uDao = new UsuarioDAO();
+
+                // Cria uma lista para receber os registros retornados
+                List usuario = new ArrayList();
+
+                // Recebe os registros e coloca na lista
+                usuario = uDao.pesquisar(u);
+
+                // Verifica se algum registro foi encontrado
+                if (usuario.isEmpty()) {
+                    // Criar um atributo mensagem para o objeto request
+                    request.setAttribute("mensagem", "Nenhuma ocorrência localizada!");
+                    response.setHeader("Refresh", "2; url=\"pesquisarUsuario.jsp\"");
+
+                    // Redireciona para a página de mensagem
+                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    redireciona.forward(request, response);
+                    
+                    
+                } else {
+                    // Criar um atributo para o objeto request
+                    request.setAttribute("listaUsuario", usuario);
+
+                    // Redireciona para a página de mensagem 
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemUsuario.jsp");
+                    redireciona.forward(request, response);
+                }
+
+            } catch (SQLException e) {
+                /**
+                 * Cria o atributo mensagem utilizando o objeto request para
+                 * enviar para a página de mensagem caso não conecte no banco
+                 */
+                if (e.getErrorCode() == 0) {
+                    request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
+                    // Redirecionar para uma saída (view)
+                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    redireciona.forward(request, response);
+                }
+            }
+        }
+
+        // Verifica se o registro foi selecionado para edição
+        if (request.getParameter("acao").contains("editar")) {
+            // Tratamento de erro para a conexão com o banco de dados
+            try {
+
+                // Cria um objeto Pessoa
+                Usuario u = new Usuario();
+
+                // Atribui o id ao objeto recuperado do formulário
+                u.setId(Integer.parseInt(request.getParameter("id")));
+
+                // Criar um instância do model (PessoaDAO)
+                UsuarioDAO uDao = new UsuarioDAO();
+
+                // Cria uma lista para receber o registro retornado
+                List usuario = new ArrayList();
+
+                // Recebe o registro e coloca na lista
+                usuario = uDao.editar(u);
+
+                // Cria um atributo para o objeto request e passa a lista de pessoas
+                request.setAttribute("listaUsuario", usuario);
+
+                // Redireciona para a página de edição (formulário)
+                RequestDispatcher redireciona = request.getRequestDispatcher("editarUsuario.jsp");
+                redireciona.forward(request, response);
+
+            } catch (SQLException e) {
+                /**
+                 * Cria o atributo mensagem utilizando o objeto request para
+                 * enviar para a página de mensagem caso não conecte no banco
+                 */
+                if (e.getErrorCode() == 0) {
+                    request.setAttribute("mensagem", "Não foi possível se comunicar com o banco de dados!");
+
+                    // Redireciona para a página de mensagem
+                    RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
+                    redireciona.forward(request, response);
+                }
+            }
+        }
+
         // Verifica se o registro foi selecionado para exclusão
         if (request.getParameter("acao").contains("excluir")) {
             // Tratamento de erro para a conexão com o banco de dados
@@ -145,13 +239,23 @@ public class ControleUsuario extends HttpServlet {
                 // Recebe os registros e coloca na lista
                 usuario = uDao.listar();
 
-                // Cria um atributo para o objeto request e passa a lista
-                request.setAttribute("listaUsuario", usuario);
+                // Verifica se existem registros para serem exibidos
+                if (usuario.isEmpty()) {
+                    // Cria um atributo mensagem para o objeto request
+                    request.setAttribute("mensagem", "Não há registros para serem exibidos!");
 
-                // Redireciona para a página de listagem 
-                RequestDispatcher redireciona = request.getRequestDispatcher("listagemUsuario.jsp");
-                redireciona.forward(request, response);
+                    // Redireciona para a página de mensagem
+                    request.setAttribute("listaUsuario", usuario);
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemUsuario.jsp");
+                    redireciona.forward(request, response);
+                } else {
+                    // Cria um atributo para o objeto request e passa a lista
+                    request.setAttribute("listaUsuario", usuario);
 
+                    // Redireciona para a página de listagem 
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemUsuario.jsp");
+                    redireciona.forward(request, response);
+                }
             } catch (SQLException e) {
                 if (e.getErrorCode() == 0) {
                     /**
@@ -177,7 +281,6 @@ public class ControleUsuario extends HttpServlet {
 
                 // Atribui os valores do fomulário ao objeto Pessoa
                 u.setId(Integer.parseInt(request.getParameter("id")));
-                u.setTipoUsuarioId(Integer.parseInt(request.getParameter("cargo")));
                 u.setUsuario(request.getParameter("usuario"));
                 u.setSenha(request.getParameter("senha"));
                 

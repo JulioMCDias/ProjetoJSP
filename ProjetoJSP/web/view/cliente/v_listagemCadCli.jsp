@@ -1,18 +1,6 @@
-<script>
-function formatar(mascara, documento){
-  var i = documento.value.length;
-  var saida = mascara.substring(0,1);
-  var texto = mascara.substring(i)
-  
-  if (texto.substring(0,1) != saida){
-            documento.value += texto.substring(0,1);
-  }
-  
-}
-</script>
 <!------------------------------------ MODAL CADASTRAR ------------------------------------>
 <div id="ModalCadastrarCliente" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -23,37 +11,30 @@ function formatar(mascara, documento){
                 <form name="form_mvc" class="form-horizontal" action="ControleCliente" method="post">
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputNome" class="col-lg-2 control-label">Nome</label>
+                            <label for="inputNome" class="col-lg-2 control-label">Nome Completo</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputNome" name="nome" onKeypress="return letras(event)" placeholder="Digite seu nome" value="" class="form-control" required>
+                                <input type="text" id="inputNome" name="nome" onKeypress="return letras(event)" placeholder="Digite o nome completo" value="" class="form-control" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputUltNome" class="col-lg-2 control-label">CPF</label>
+                            <label for="inputEndereco" class="col-lg-2 control-label">Endereço</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputUltNome" name="CPF"  OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu CPF" value="" class="form-control" required>
+                                <input type="text" id="inputEndereco" name="endereco" placeholder="Digite o endereço" value="" class="form-control" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputNomeMeio" class="col-lg-2 control-label">Endereço</label>
+                            <label for="inputCpf" class="col-lg-2 control-label">CPF</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputNomeMeio" name="endereco"  placeholder="Digite seu endereco" value="" class="form-control" required>
+                                <input type="text" id="inputCpf" name="cpf" maxlength="14" OnKeyPress="formatar('###.###.###-##', this); return numeros(event);" placeholder="Digite o CPF" value="" class="form-control" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputGenero" class="col-lg-2 control-label">Gênero</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="gender" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" name="gender" value="Masculino" data-parsley-multiple="gender" required> &nbsp; Masculino &nbsp;
-                                    </label>
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" name="gender" value="Feminino" data-parsley-multiple="gender" required> Feminino
-                                    </label>
-                                </div>
+                            <label for="inputEmail" class="col-lg-2 control-label">E-mail</label>
+                            <div class="col-lg-5">
+                                <input type="email" id="inputEmail" name="email"  placeholder="Digite o e-mail" value="" class="form-control" required>
                             </div>
                         </div>
 

@@ -1,9 +1,9 @@
 /**
- * controller/Controle.java
+ * controller/ControleProduto.java
  */
 package controller;
 
-import bean.Pessoa;
+import bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
-import model.PessoaDAO;
+import model.ProdutoDAO;
 
 /**
  *
@@ -37,25 +37,28 @@ public class ControleProduto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         // Verifica se o botão de cadastrar foi acionado
         if (request.getParameter("acao").contains("cadastrar")) {
 
-            // Cria um objeto Pessoa
-            Pessoa p = new Pessoa();
+            // Cria um objeto Produto
+            Produto p = new Produto();
 
             // Atribui os valores do fomulário ao objeto criado
-            p.setNome(request.getParameter("nome"));
-            p.setCPF(request.getParameter("last-name"));
+            p.setCodigo(request.getParameter("codigo"));
+            p.setDescricao(request.getParameter("descricao"));
+            p.setUnidade(request.getParameter("unidade"));
+            p.setDetalhes(request.getParameter("detalhes"));
+            p.setPreco(Float.parseFloat(request.getParameter("preco")));
 
             
             
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ProdutoDAO
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 /**
                  * Invoca o método inserir no pDao para realizar a inclusão do
@@ -68,7 +71,7 @@ public class ControleProduto extends HttpServlet {
                  * enviar para a página de mensagem
                  */
                 request.setAttribute("mensagem", resultado);
-                response.setHeader("Refresh", "2; url=\"ControleCliente?acao=listar\"");
+                response.setHeader("Refresh", "2; url=\"ControleProduto?acao=listar\"");
 
             } catch (SQLException e) {
                 /**
@@ -89,29 +92,29 @@ public class ControleProduto extends HttpServlet {
         if (request.getParameter("acao").contains("pesquisar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Produto
+                Produto p = new Produto();
 
                 /**
                  * Atribui os valores do fomulário ao objeto com o símbolo de %
                  * para o operador LIKE
                  */
-                p.setNome("%" + request.getParameter("nome") + "%");
+                p.setCodigo("%" + request.getParameter("codigo") + "%");
 
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ProdutoDAO
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 // Cria uma lista para receber os registros retornados
-                List pessoas = new ArrayList();
+                List produto = new ArrayList();
 
                 // Recebe os registros e coloca na lista
-                pessoas = pDao.pesquisar(p);
+                produto = pDao.pesquisar(p);
 
                 // Verifica se algum registro foi encontrado
-                if (pessoas.isEmpty()) {
+                if (produto.isEmpty()) {
                     // Criar um atributo mensagem para o objeto request
                     request.setAttribute("mensagem", "Nenhuma ocorrência localizada!");
-                    response.setHeader("Refresh", "2; url=\"v_pesquisarCliente.jsp\"");
+                    response.setHeader("Refresh", "2; url=\"v_pesquisarProduto.jsp\"");
 
                     // Redireciona para a página de mensagem
                     RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
@@ -120,10 +123,10 @@ public class ControleProduto extends HttpServlet {
                     
                 } else {
                     // Criar um atributo para o objeto request
-                    request.setAttribute("listaPessoas", pessoas);
+                    request.setAttribute("listaProdutos", produto);
 
                     // Redireciona para a página de mensagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemProduto.jsp");
                     redireciona.forward(request, response);
                 }
 
@@ -146,27 +149,27 @@ public class ControleProduto extends HttpServlet {
             // Tratamento de erro para a conexão com o banco de dados
             try {
 
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Produto
+                Produto p = new Produto();
 
                 // Atribui o id ao objeto recuperado do formulário
                 p.setId(Integer.parseInt(request.getParameter("id")));
 
-                // Criar um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Criar um instância do model (ProdutoDAO)
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 // Cria uma lista para receber o registro retornado
-                List pessoas = new ArrayList();
+                List produtos = new ArrayList();
 
                 // Recebe o registro e coloca na lista
-                pessoas = pDao.editar(p);
+                produtos = pDao.editar(p);
 
-                // Cria um atributo para o objeto request e passa a lista de pessoas
-                request.setAttribute("listaPessoas", pessoas);
+                // Cria um atributo para o objeto request e passa a lista de produtos
+                request.setAttribute("listaProdutos", produtos);
 
                 // Redireciona para a página de edição (formulário)
-                /*RequestDispatcher redireciona = request.getRequestDispatcher("v_editarCliente.jsp");
-                redireciona.forward(request, response);*/
+                RequestDispatcher redireciona = request.getRequestDispatcher("listagemItem.jsp");
+                redireciona.forward(request, response);
 
             } catch (SQLException e) {
                 /**
@@ -187,14 +190,14 @@ public class ControleProduto extends HttpServlet {
         if (request.getParameter("acao").contains("excluir")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Produto
+                Produto p = new Produto();
 
-                // Atribui o id ao objeto Pessoa recuperado do formulário
+                // Atribui o id ao objeto Produto recuperado do formulário
                 p.setId(Integer.parseInt(request.getParameter("id")));
 
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ProdutoDAO
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 // Recebe a mensagem da exclusão
                 String mensagem = pDao.excluir(p);
@@ -207,7 +210,7 @@ public class ControleProduto extends HttpServlet {
                  * redirecionar para a página de listagem após cinco segundos
                  * utilizando uma escrita no cabeçalho HTTP
                  */
-                response.setHeader("Refresh", "2; url=\"ControleCliente?acao=listar\"");
+                response.setHeader("Refresh", "2; url=\"ControleProduto?acao=listar\"");
 
                 // Redireciona para a página de mensagem 
                 RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
@@ -232,29 +235,29 @@ public class ControleProduto extends HttpServlet {
         if (request.getParameter("acao").contains("listar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria um instância do model (ProdutoDAO)
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 // Cria uma lista para receber os registros retornados
-                List pessoas = new ArrayList();
+                List produtos = new ArrayList();
 
                 // Recebe os registros e coloca na lista
-                pessoas = pDao.listar();
+                produtos = pDao.listar();
 
                 // Verifica se existem registros para serem exibidos
-                if (pessoas.isEmpty()) {
+                if (produtos.isEmpty()) {
                     // Cria um atributo mensagem para o objeto request
                     request.setAttribute("mensagem", "Não há registros para serem exibidos!");
 
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("cadastrarCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemProduto.jsp");
                     redireciona.forward(request, response);
                 } else {
                     // Cria um atributo para o objeto request e passa a lista
-                    request.setAttribute("listaPessoas", pessoas);
+                    request.setAttribute("listaProdutos", produtos);
 
                     // Redireciona para a página de listagem 
-                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemProduto.jsp");
                     redireciona.forward(request, response);
                 }
             } catch (SQLException e) {
@@ -277,21 +280,20 @@ public class ControleProduto extends HttpServlet {
         if (request.getParameter("acao").contains("alterar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Produto
+                Produto p = new Produto();
 
-                // Atribui os valores do fomulário ao objeto Pessoa
+                // Atribui os valores do fomulário ao objeto Produto
                 p.setId(Integer.parseInt(request.getParameter("id")));
-                p.setNome(request.getParameter("nome"));
-                p.setCPF(request.getParameter("last-name"));
-                p.setEndereco(request.getParameter("middle-name"));
-                p.setGenero(request.getParameter("gender")); 
-                p.setTelefone(request.getParameter("telefone"));
-                p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
+                p.setCodigo(request.getParameter("codigo"));
+                p.setDescricao(request.getParameter("descricao"));
+                p.setUnidade(request.getParameter("unidade"));
+                p.setDetalhes(request.getParameter("detalhes"));
+                p.setPreco(Float.parseFloat(request.getParameter("preco")));
                 
                         
-                // Cria um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria um instância do model (ProdutoDAO)
+                ProdutoDAO pDao = new ProdutoDAO();
 
                 // Executa a atualização dos dados e recebe uma mensagem
                 String mensagem = pDao.alterar(p);
@@ -301,7 +303,7 @@ public class ControleProduto extends HttpServlet {
                  * redirecionar para a página de listagem após cinco segundos
                  * utilizando uma escrita no cabeçalho HTTP
                  */
-                response.setHeader("Refresh", "2; url=\"ControleCliente?acao=listar\"");
+                response.setHeader("Refresh", "2; url=\"ControleProduto?acao=listar\"");
                 
                 // Cria o atributo mensagem para o objeto request 
                 request.setAttribute("mensagem", mensagem);
@@ -342,7 +344,7 @@ public class ControleProduto extends HttpServlet {
             processRequest(request, response);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ControleCliente.class
+            Logger.getLogger(ControleProduto.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -362,7 +364,7 @@ public class ControleProduto extends HttpServlet {
             processRequest(request, response);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ControleCliente.class
+            Logger.getLogger(ControleProduto.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }

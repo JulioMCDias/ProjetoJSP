@@ -1,6 +1,6 @@
 <!------------------------------------ MODAL EDITAR ------------------------------------>
 <div id="ModalEditarCliente" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -19,37 +19,30 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="inputNome" class="col-lg-2 control-label">Nome</label>
+                            <label for="inputNome" class="col-lg-2 control-label">Nome Completo</label>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Digite seu nome" value="">
+                                <input type="text" class="form-control" id="inputNome" onKeypress="return letras(event)" name="nome" placeholder="Digite o nome" value="">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputUltNome" class="col-lg-2 control-label">CPF</label>
+                            <label for="inputEndereco" class="col-lg-2 control-label">Endereço</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputUltNome" name="CPF" placeholder="Digite seu CPF" value="" class="form-control">
+                                <input type="text" id="inputEndereco" name="endereco" placeholder="Digite o endereço" value="" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputNomeMeio" class="col-lg-2 control-label">Endereço</label>
+                            <label for="inputCpf" class="col-lg-2 control-label">CPF</label>
                             <div class="col-lg-5">
-                                <input type="text" id="inputNomeMeio" name="endereco" placeholder="Digite seu endereco" value="" class="form-control">
+                                <input type="text" id="inputCpf" name="cpf" maxlength="14" OnKeyPress="formatar('###.###.###-##', this); return numeros(event);" placeholder="Digite o cpf" value="" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputGenero" class="col-lg-2 control-label">Gênero</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="gender" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" id="inputGenero" name="gender" value="Masculino" data-parsley-multiple="gender" required>&nbsp; Masculino &nbsp;
-                                    </label>
-                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" id="inputGenero" name="gender" value="Feminino" data-parsley-multiple="gender" required> Feminino
-                                    </label>
-                                </div>
+                            <label for="inputEmail" class="col-lg-2 control-label">E-mail</label>
+                            <div class="col-lg-5">
+                                <input type="email" id="inputEmail" name="email"  placeholder="Digite o e-mail" value="" class="form-control" required>
                             </div>
                         </div>
 
@@ -77,3 +70,29 @@
     </div>
 </div>
 <!------------------------------------ FIM MODAL EDITAR ------------------------------------>
+
+<!-- Modal -->
+<div id="modal-mensagem" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Mensagem</h4>
+      </div>
+      <div class="modal-body">
+          <p>                        
+          <h4>
+            <!-- A linha abaixo apresenta a mensagem gerada no Controle -->
+            <%out.print(request.getAttribute("mensagem"));%>
+          </h4>
+          </p>     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>           

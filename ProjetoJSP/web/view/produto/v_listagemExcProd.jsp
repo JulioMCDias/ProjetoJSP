@@ -1,5 +1,5 @@
 <!------------------------------------ MODAL EXCLUIR ------------------------------------>
-<div id="ModalExcluirCliente" class="modal fade" role="dialog">
+<div id="ModalExcluirProduto" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -8,9 +8,9 @@
                 <h4 class="modal-title">Mensagem</h4>
             </div>
             <div class="modal-body">
-                <form name="form_mvc" class="form-horizontal" action="ControleCliente" method="post">
+                <form name="form_mvc" class="form-horizontal" action="ControleProduto" method="post">
                     <fieldset>
-                        <input type="hidden" class="form-control" id="inputId" name="id" value="" readonly>
+                        <input type="hidden" class="form-control" id="inputId" name="id" value="" readonly>                        
                         <div class="form-group">
                             <div class="col-lg-7">
                                 <h4>Confirma a exclusão deste registro?</h4>
@@ -26,5 +26,4 @@
         </div>
     </div>
 </div>
-
 <!------------------------------------ FIM MODAL EXCLUIR ------------------------------------>

@@ -1,6 +1,3 @@
-<%@page import="java.util.List"%>
-<%@page import="bean.TipoUsuario"%>
-<%@page import="java.util.ArrayList"%>
 <!------------------------------------ MODAL CADASTRAR ------------------------------------>
         <div id="ModalCadastrarUsuario" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -15,25 +12,12 @@
                         <form name="form_mvc" class="form-horizontal" action="ControleUsuario" method="post">
                             <fieldset>  
                                 <div class="form-group">
-                                    <label for="inputUsuario" class="col-lg-2 control-label">Nome</label>
+                                    <label for="inputUsuario" class="col-lg-2 control-label">Usuário</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="inputUser" name="usuario" placeholder="Digite o nome" value="" class="form-control" required>
+                                        <input type="text" id="inputUser" name="usuario" placeholder="Digite um nome de usuário" value="" class="form-control" required>
                                     </div>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Cargo</label>
-                                    <div class="col-lg-5">
-                                      <select class="form-control" id="inputUser" name="cargo">
-                                        <% List<TipoUsuario> type = (ArrayList) session.getAttribute("listaTipoUser");
-                                    // Percorre a lista dos registros e apresenta no navegador
-                                    for (TipoUsuario u : type){%>
-                                          <option > <% out.print(u.getNome());%> </option>
-                                    <%}%>      
-                                       </select>
-                                    </div>
-                                </div>
-                                
+
                                 <div class="form-group">
                                     <label for="inputSenha" class="col-lg-2 control-label">Senha</label>
                                     <div class="col-lg-5">

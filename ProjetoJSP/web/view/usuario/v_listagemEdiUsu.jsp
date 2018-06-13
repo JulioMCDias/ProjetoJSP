@@ -1,6 +1,3 @@
-<%@page import="java.util.List"%>
-<%@page import="bean.TipoUsuario"%>
-<%@page import="java.util.ArrayList"%>
 <!------------------------------------ MODAL EDITAR ------------------------------------>
 <div id="ModalEditarUsuario" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -23,25 +20,12 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="inputUser" class="col-lg-2 control-label">Nome</label>
+                                    <label for="inputUser" class="col-lg-2 control-label">Usuário</label>
                                     <div class="col-lg-5">
                                         <input type="text" id="inputUser" name="usuario" placeholder="Digite um nome de usuário" value="" class="form-control" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Cargo</label>
-                                    <div class="col-lg-5">
-                                      <select class="form-control" id="inputCargo" name="cargo">
-                                        <% List<TipoUsuario> types = (ArrayList) session.getAttribute("listaTipoUser");
-                                    // Percorre a lista dos registros e apresenta no navegador
-                                    for (TipoUsuario u : types){%>
-                                          <option value="<%out.print(u.getId());%>"><% out.print(u.getNome());%></option>
-                                    <%}%>      
-                                       </select>
-                                    </div>
-                                </div>
-                                
                                 <div class="form-group">
                                     <label for="inputSenha" class="col-lg-2 control-label">Senha</label>
                                     <div class="col-lg-5">

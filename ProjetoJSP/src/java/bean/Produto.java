@@ -1,19 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
-/**
- *
- * @author Julio
- */
 public class Produto {
     private int id;
-    private String nome;
-    private String discricao;
+    private String codigo;
+    private String descricao;
+    private String unidade;
+    private String detalhes;
+    private Float preco;
+    
+    // Método construtor
+    public Produto() {
+    }
 
+    public String getDetalhes() {
+        return detalhes;
+    }
+
+    public void setDetalhes(String detalhes) {
+        this.detalhes = detalhes;
+    }
+      
     public int getId() {
         return id;
     }
@@ -22,20 +28,36 @@ public class Produto {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public String getDiscricao() {
-        return discricao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDiscricao(String discricao) {
-        this.discricao = discricao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
+    public Float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Float preco) {
+        this.preco = preco;
     }
     
     

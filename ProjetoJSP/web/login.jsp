@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <%@include file="header.jsp"%>
     </head>
@@ -41,6 +41,7 @@
                             <h1><i class="fa fa-paw"></i> Sistema JSP!</h1>
                             <p>Criado por:</p>
                             <p>Francisco Renato Severiano<br>
+                               Francisco Antônio Macedo<br>
                                Julio Marques Correa Dias<br>
                                Rafael Pinheiro Rocha
                             </p>

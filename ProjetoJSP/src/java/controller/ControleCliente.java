@@ -1,9 +1,9 @@
 /**
- * controller/Controle.java
+ * controller/ControleCliente.java
  */
 package controller;
 
-import bean.Pessoa;
+import bean.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
-import model.PessoaDAO;
+import model.ClienteDAO;
 
 /**
  *
- * Servlet Controle
+ * Servlet ControleCliente
  */
 public class ControleCliente extends HttpServlet {
 
@@ -37,34 +37,34 @@ public class ControleCliente extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         // Verifica se o botão de cadastrar foi acionado
         if (request.getParameter("acao").contains("cadastrar")) {
 
-            // Cria um objeto Pessoa
-            Pessoa p = new Pessoa();
+            // Cria um objeto Cliente
+            Cliente c = new Cliente();
 
             // Atribui os valores do fomulário ao objeto criado
-            p.setNome(request.getParameter("nome"));
-            p.setCPF(request.getParameter("last-name"));
-            p.setEndereco(request.getParameter("middle-name"));
-            p.setGenero(request.getParameter("gender")); 
-            p.setTelefone(request.getParameter("telefone"));
-            p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
+            c.setNome(request.getParameter("nome"));
+            c.setEndereco(request.getParameter("endereco"));
+            c.setCpf(request.getParameter("cpf"));
+            c.setEmail(request.getParameter("email")); 
+            c.setTelefone(request.getParameter("telefone"));
+            c.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
             
             
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ClienteDAO
+                ClienteDAO cDao = new ClienteDAO();
 
                 /**
-                 * Invoca o método inserir no pDao para realizar a inclusão do
+                 * Invoca o método inserir no cDao para realizar a inclusão do
                  * registro e armazena o resultado na variável resultado
                  */
-                String resultado = pDao.inserir(p);
+                String resultado = cDao.inserir(c);
 
                 /**
                  * Cria o atributo mensagem utilizando o objeto request para
@@ -92,29 +92,29 @@ public class ControleCliente extends HttpServlet {
         if (request.getParameter("acao").contains("pesquisar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Cliente
+                Cliente c = new Cliente();
 
                 /**
                  * Atribui os valores do fomulário ao objeto com o símbolo de %
                  * para o operador LIKE
                  */
-                p.setNome("%" + request.getParameter("nome") + "%");
+                c.setNome("%" + request.getParameter("nome") + "%");
 
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ClienteDAO
+                ClienteDAO cDao = new ClienteDAO();
 
                 // Cria uma lista para receber os registros retornados
-                List pessoas = new ArrayList();
+                List clientes = new ArrayList();
 
                 // Recebe os registros e coloca na lista
-                pessoas = pDao.pesquisar(p);
+                clientes = cDao.pesquisar(c);
 
                 // Verifica se algum registro foi encontrado
-                if (pessoas.isEmpty()) {
+                if (clientes.isEmpty()) {
                     // Criar um atributo mensagem para o objeto request
                     request.setAttribute("mensagem", "Nenhuma ocorrência localizada!");
-                    response.setHeader("Refresh", "2; url=\"v_pesquisarCliente.jsp\"");
+                    response.setHeader("Refresh", "2; url=\"pesquisar.jsp\"");
 
                     // Redireciona para a página de mensagem
                     RequestDispatcher redireciona = request.getRequestDispatcher("mensagem.jsp");
@@ -123,7 +123,7 @@ public class ControleCliente extends HttpServlet {
                     
                 } else {
                     // Criar um atributo para o objeto request
-                    request.setAttribute("listaPessoas", pessoas);
+                    request.setAttribute("listaClientes", clientes);
 
                     // Redireciona para a página de mensagem 
                     RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
@@ -131,7 +131,7 @@ public class ControleCliente extends HttpServlet {
                 }
 
             } catch (SQLException e) {
-                /*
+                /**
                  * Cria o atributo mensagem utilizando o objeto request para
                  * enviar para a página de mensagem caso não conecte no banco
                  */
@@ -149,27 +149,27 @@ public class ControleCliente extends HttpServlet {
             // Tratamento de erro para a conexão com o banco de dados
             try {
 
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Cliente
+                Cliente c = new Cliente();
 
                 // Atribui o id ao objeto recuperado do formulário
-                p.setId(Integer.parseInt(request.getParameter("id")));
+                c.setId(Integer.parseInt(request.getParameter("id")));
 
-                // Criar um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Criar um instância do model (ClienteDAO)
+                ClienteDAO cDao = new ClienteDAO();
 
                 // Cria uma lista para receber o registro retornado
-                List pessoas = new ArrayList();
+                List clientes = new ArrayList();
 
                 // Recebe o registro e coloca na lista
-                pessoas = pDao.editar(p);
+                clientes = cDao.editar(c);
 
-                // Cria um atributo para o objeto request e passa a lista de pessoas
-                request.setAttribute("listaPessoas", pessoas);
+                // Cria um atributo para o objeto request e passa a lista de clientes
+                request.setAttribute("listaClientes", clientes);
 
                 // Redireciona para a página de edição (formulário)
-                /*RequestDispatcher redireciona = request.getRequestDispatcher("v_editarCliente.jsp");
-                redireciona.forward(request, response);*/
+                RequestDispatcher redireciona = request.getRequestDispatcher("editar.jsp");
+                redireciona.forward(request, response);
 
             } catch (SQLException e) {
                 /**
@@ -190,17 +190,17 @@ public class ControleCliente extends HttpServlet {
         if (request.getParameter("acao").contains("excluir")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Cliente
+                Cliente c = new Cliente();
 
-                // Atribui o id ao objeto Pessoa recuperado do formulário
-                p.setId(Integer.parseInt(request.getParameter("id")));
+                // Atribui o id ao objeto Cliente recuperado do formulário
+                c.setId(Integer.parseInt(request.getParameter("id")));
 
-                // Cria uma instância do model - PessoaDAO
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria uma instância do model - ClienteDAO
+                ClienteDAO cDao = new ClienteDAO();
 
                 // Recebe a mensagem da exclusão
-                String mensagem = pDao.excluir(p);
+                String mensagem = cDao.excluir(c);
 
                 // Cria um atributo mensagem para o objeto request
                 request.setAttribute("mensagem", mensagem);
@@ -235,26 +235,25 @@ public class ControleCliente extends HttpServlet {
         if (request.getParameter("acao").contains("listar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria um instância do model (ClienteDAO)
+                ClienteDAO cDao = new ClienteDAO();
 
                 // Cria uma lista para receber os registros retornados
-                List pessoas = new ArrayList();
+                List clientes = new ArrayList();
 
                 // Recebe os registros e coloca na lista
-                pessoas = pDao.listar();
+                clientes = cDao.listar();
 
                 // Verifica se existem registros para serem exibidos
-                if (pessoas.isEmpty()) {
+                if (clientes.isEmpty()) {
                     // Cria um atributo mensagem para o objeto request
-                    request.setAttribute("mensagem", "Não há registros para serem exibidos!");
-
                     // Redireciona para a página de mensagem
-                    RequestDispatcher redireciona = request.getRequestDispatcher("cadastrarCliente.jsp");
+                    request.setAttribute("listaClientes", clientes);
+                    RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
                     redireciona.forward(request, response);
                 } else {
                     // Cria um atributo para o objeto request e passa a lista
-                    request.setAttribute("listaPessoas", pessoas);
+                    request.setAttribute("listaClientes", clientes);
 
                     // Redireciona para a página de listagem 
                     RequestDispatcher redireciona = request.getRequestDispatcher("listagemCliente.jsp");
@@ -280,24 +279,24 @@ public class ControleCliente extends HttpServlet {
         if (request.getParameter("acao").contains("alterar")) {
             // Tratamento de erro para a conexão com o banco de dados
             try {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Cliente
+                Cliente c = new Cliente();
 
-                // Atribui os valores do fomulário ao objeto Pessoa
-                p.setId(Integer.parseInt(request.getParameter("id")));
-                p.setNome(request.getParameter("nome"));
-                p.setCPF(request.getParameter("CPF"));
-                p.setEndereco(request.getParameter("endereco"));
-                p.setGenero(request.getParameter("gender")); 
-                p.setTelefone(request.getParameter("telefone"));
-                p.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
+                // Atribui os valores do fomulário ao objeto Cliente
+                c.setId(Integer.parseInt(request.getParameter("id")));
+                c.setNome(request.getParameter("nome"));
+                c.setEndereco(request.getParameter("endereco"));
+                c.setCpf(request.getParameter("cpf"));
+                c.setEmail(request.getParameter("email")); 
+                c.setTelefone(request.getParameter("telefone"));
+                c.setDatanasc(request.getParameter(DatatypeConverter.parseString("datanasci")));
                 
                         
-                // Cria um instância do model (PessoaDAO)
-                PessoaDAO pDao = new PessoaDAO();
+                // Cria um instância do model (ClienteDAO)
+                ClienteDAO cDao = new ClienteDAO();
 
                 // Executa a atualização dos dados e recebe uma mensagem
-                String mensagem = pDao.alterar(p);
+                String mensagem = cDao.alterar(c);
 
                 /**
                  * Configura uma atualização da página de mensagem para

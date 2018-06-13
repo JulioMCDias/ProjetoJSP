@@ -1,9 +1,9 @@
 /**
- * model/UsuarioDAO.java
+ * model/ProdutoDAO.java
  */
 package model;
 
-import bean.Usuario;
+import bean.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import java.util.List;
 import utils.ConnectionFactory; 
 
 /**
- * Classe Model para o objeto Usuario (CRUD)
+ * Classe Model para o objeto Produto (CRUD)
  */
 public class ProdutoDAO {
     
@@ -33,23 +33,27 @@ public class ProdutoDAO {
     /**
      * Método inserir - Insere um novo registro no banco de dados
      *
-     * @param u Objeto Pessoa
+     * @param p Objeto Produto
      * @return String Mensagem de sucesso ou erro na inclusão
      * @throws SQLException
      */
-    public String inserir(Usuario u) throws SQLException {
+    public String inserir(Produto p) throws SQLException {
 
         // Instrução SQL para inclusão do registro
-        String sql = "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)";
+        String sql = "INSERT INTO produtos (codigo, descricao, unidade, detalhes, preco) VALUES (?, ?, ?, ?, ?)";
 
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
-                ps.setString(1, u.getUsuario());
-                ps.setString(2, u.getSenha());
-                        
+                
+                ps.setString(1,p.getCodigo());
+                ps.setString(2,p.getDescricao());
+                ps.setString(3,p.getUnidade());
+                ps.setString(4,p.getDetalhes());
+                ps.setFloat(5,p.getPreco());
+
                 // Executa a instrução de inclusão do registro
                 ps.execute();
             }
@@ -70,24 +74,24 @@ public class ProdutoDAO {
     /**
      * Método editar - Retorna o registro solicitado para edição
      *
-     * @param u Objeto Usuário
+     * @param p Objeto Produto
      * @return List Lista o registro encontrado
      * @throws java.sql.SQLException
      */
-    public List<Usuario> editar(Usuario u) throws SQLException {
+    public List<Produto> editar(Produto p) throws SQLException {
 
         // Instrução SQL para recuperar o registro
-        String sql = "SELECT * FROM usuarios "
+        String sql = "SELECT * FROM produtos "
                 + "WHERE id = ?";
 
         // Lista para receber o registro recuperado
-        List lstUsuario = new ArrayList();
+        List lstProduto = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
 
             // Inclui o id informado à instrução SQL
-            ps.setInt(1, u.getId());
+            ps.setInt(1, p.getId());
 
             // Avança o registro para recuperar os dados retornados do banco de dados
             try ( // Objeto que armazenará os dados recuperados (ResultSet)
@@ -99,17 +103,19 @@ public class ProdutoDAO {
                  */
                 rs.next();
 
-                // Cria um objeto Usuário
-                u = new Usuario();
+                // Cria um objeto produto
+                p = new Produto();
 
                 // Atribui ao objeto Usuário os valores retornados do banco
-
-                u.setId(rs.getInt("id"));
-                u.setUsuario(rs.getString("usuario"));
-                u.setSenha(rs.getString("senha"));
+                p.setId(rs.getInt("id"));
+                p.setCodigo(rs.getString("codigo"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setUnidade(rs.getString("unidade"));
+                p.setDetalhes(rs.getString("detalhes"));
+                p.setPreco(rs.getFloat("preco"));
                 
-                // Adiciona o objeto usuario na lista
-                lstUsuario.add(u);
+                // Adiciona o objeto produto na lista
+                lstProduto.add(p);
             }
         }
 
@@ -117,20 +123,20 @@ public class ProdutoDAO {
         conexao.close();
 
         // Retorna a lista com o registro solicitado
-        return lstUsuario;
+        return lstProduto;
     }
 
     /**
      * Método excluir - Realiza a exclusão de um registro pelo ID informado
      *
-     * @param u Objeto Usuário
+     * @param p Objeto Produto
      * @return String Mensagem de sucesso ou erro na exclusão
      * @throws java.sql.SQLException
      */
-    public String excluir(Usuario u) throws SQLException {
+    public String excluir(Produto p) throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "DELETE FROM usuarios "
+        String sql = "DELETE FROM produtos "
                 + "WHERE id = ?;";
 
         try {
@@ -138,7 +144,7 @@ public class ProdutoDAO {
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui o valor informado a ser atribuido à instrução SQL
-                ps.setInt(1, u.getId());
+                ps.setInt(1, p.getId());
 
                 // Executa a exclusão
                 ps.executeUpdate();
@@ -162,13 +168,13 @@ public class ProdutoDAO {
      * Método alterar - Realiza a gravação (alteração) do registro no banco de
      * dados
      *
-     * @param u Objeto Usuário
+     * @param p Objeto Produto
      * @return Mensagem de sucesso ou erro na alteração (salvamento do registro)
      */
-    public String alterar(Usuario u) {
+    public String alterar(Produto p) {
         // Instrução SQL para atualização do registro
-        String sql = "UPDATE usuarios SET "
-                + "usuario = ?, senha = ? "
+        String sql = "UPDATE produtos SET "
+                + "codigo = ?, descricao = ?, unidade = ?, detalhes = ?, preco = ? "
                 + "WHERE id = ?;";
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -176,9 +182,12 @@ public class ProdutoDAO {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
                 
-                ps.setString(1, u.getUsuario());
-                ps.setString(2, u.getSenha());
-                ps.setInt(3, u.getId());
+                ps.setString(1, p.getCodigo());
+                ps.setString(2, p.getDescricao());
+                ps.setString(3, p.getUnidade());
+                ps.setString(4, p.getDetalhes());
+                ps.setFloat(5, p.getPreco());
+                ps.setInt(6, p.getId());
                 
                 // Executa a instrução de atualização do registro
                 ps.executeUpdate();
@@ -200,23 +209,23 @@ public class ProdutoDAO {
     /**
      * Método Pesquisar - Realiza a pesquisa de um registro específico pelo ID
      *
-     * @param u Objeto Usuario
+     * @param p Objeto Produto
      * @return List Lista com registros encontrados
      * @throws java.sql.SQLException
      */
-    public List<Usuario> pesquisar(Usuario u) throws SQLException {
+    public List<Produto> pesquisar(Produto p) throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT * FROM usuarios "
-                + "WHERE usuario like ? ORDER BY ID ASC;";
+        String sql = "SELECT * FROM produtos "
+                + "WHERE produto like ? ORDER BY ID ASC;";
 
         // Lista para receber os registros recuperados
-        List lstUsuario = new ArrayList();
+        List lstProdutoList = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
             // Inclui o valor informado a ser atribuido à instrução SQL
-            ps.setString(1, u.getUsuario());
+            ps.setString(1, p.getCodigo());
 
             try ( // Objeto que armazenará os dados recuperados (recordSet)
                     ResultSet rs = ps.executeQuery()) {
@@ -225,17 +234,19 @@ public class ProdutoDAO {
                  * lista
                  */
                 while (rs.next()) {
-                    // Cria um objeto Usuario (bean)
-                    u = new Usuario();
+                    // Cria um objeto Produto (bean)
+                    p = new Produto();
 
-                    // Atribui ao objeto Usuario os valores retornados do banco
-                    u.setId(rs.getInt("id"));
-                    u.setUsuario(rs.getString("usuario"));
-                    u.setSenha(rs.getString("senha"));
+                    // Atribui ao objeto Usuário os valores retornados do banco
+                     p.setId(rs.getInt("id"));
+                     p.setCodigo(rs.getString("codigo"));
+                     p.setDescricao(rs.getString("descricao"));
+                     p.setUnidade(rs.getString("unidade"));
+                     p.setDetalhes(rs.getString("detalhes"));
+                     p.setPreco(rs.getFloat("preco"));
                     
-
-                    // Adiciona o objeto Usuario na lista de usuarios
-                    lstUsuario.add(u);
+                    // Adiciona o objeto Produto na lista de produtos
+                    lstProdutoList.add(p);
                 }
             }
         }
@@ -243,8 +254,8 @@ public class ProdutoDAO {
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as usuarios encontradas
-        return lstUsuario;
+        // Retorna a lista com as produtos encontradas
+        return lstProdutoList;
     }
 
     /**
@@ -254,13 +265,13 @@ public class ProdutoDAO {
      * @throws java.sql.SQLException
      *
      */
-    public List<Usuario> listar() throws SQLException {
+    public List<Produto> listar() throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT * FROM usuarios ORDER BY usuario ASC;";
+        String sql = "SELECT * FROM produtos ORDER BY codigo ASC;";
 
         // Lista para receber os registros recuperados
-        List lstUsuario = new ArrayList();
+        List lstProdutoList = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql);
@@ -268,27 +279,30 @@ public class ProdutoDAO {
                 ResultSet rs = ps.executeQuery()) {
             /**
              * Percorre os registros retornados do banco de dados e coloca em
-             * uma lista (lstUsuario)
+             * uma lista (lstProduto)
              */
             while (rs.next()) {
-                // Cria um objeto Usuario
-                Usuario u = new Usuario();
+                // Cria um objeto Produto
+                Produto p = new Produto();
 
-                // Atribui ao objeto Usuario os valores retornados do banco
-                u.setId(rs.getInt("id"));
-                u.setUsuario(rs.getString("usuario"));
-                u.setSenha(rs.getString("senha"));
+                // Atribui ao objeto Produto os valores retornados do banco
+                p.setId(rs.getInt("id"));
+                p.setCodigo(rs.getString("codigo"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setUnidade(rs.getString("unidade"));
+                p.setDetalhes(rs.getString("detalhes"));
+                p.setPreco(rs.getFloat("preco"));
                 
 
-                // Adiciona o objeto usuario na lista de usuarios
-                lstUsuario.add(u);
+                // Adiciona o objeto produto na lista de produtos
+                lstProdutoList.add(p);
             }
         }
 
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as usuarios encontradas
-        return lstUsuario;
+        // Retorna a lista com os produtos encontrados
+        return lstProdutoList;
     }
 }

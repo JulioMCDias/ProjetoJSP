@@ -33,24 +33,22 @@ public class UsuarioDAO {
     /**
      * Método inserir - Insere um novo registro no banco de dados
      *
-     * @param u Objeto Pessoa
+     * @param u Objeto Usuario
      * @return String Mensagem de sucesso ou erro na inclusão
      * @throws SQLException
      */
     public String inserir(Usuario u) throws SQLException {
 
         // Instrução SQL para inclusão do registro
-        String sql = "INSERT INTO usuarios (tipoUsuarioId, usuario, senha) "
-                + "VALUES ((SELECT id FROM tipoUsuario WHERE nome = ?), ?, ?)";
+        String sql = "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)";
 
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
-                ps.setString(1, u.getCargo());
-                ps.setString(2, u.getUsuario());
-                ps.setString(3, u.getSenha());
+                ps.setString(1, u.getUsuario());
+                ps.setString(2, u.getSenha());
                         
                 // Executa a instrução de inclusão do registro
                 ps.execute();
@@ -79,13 +77,9 @@ public class UsuarioDAO {
     public List<Usuario> editar(Usuario u) throws SQLException {
 
         // Instrução SQL para recuperar o registro
-        String sqls = "SELECT * FROM usuarios "
+        String sql = "SELECT * FROM usuarios "
                 + "WHERE id = ?";
-          
-        String sql = "SELECT usuarios.*, tipoUsuario.nome "
-                + "FROM usuarios INNER JOIN tipoUsuario "
-                + "ON usuarios.tipoUsuarioId = tipoUsuario.id "
-                + "WHERE usuarios.id=?";
+
         // Lista para receber o registro recuperado
         List lstUsuario = new ArrayList();
 
@@ -112,7 +106,6 @@ public class UsuarioDAO {
 
                 u.setId(rs.getInt("id"));
                 u.setUsuario(rs.getString("usuario"));
-                u.setCargo(rs.getString("nome"));
                 u.setSenha(rs.getString("senha"));
                 
                 // Adiciona o objeto usuario na lista
@@ -175,7 +168,7 @@ public class UsuarioDAO {
     public String alterar(Usuario u) {
         // Instrução SQL para atualização do registro
         String sql = "UPDATE usuarios SET "
-                + "usuario = ?, tipoUsuarioId = ?,  senha = ? "
+                + "usuario = ?, senha = ? "
                 + "WHERE id = ?;";
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -184,9 +177,8 @@ public class UsuarioDAO {
                 // Inclui os valores a serem atribuidos à instrução SQL
                 
                 ps.setString(1, u.getUsuario());
-                ps.setInt(2, u.getTipoUsuarioId());
-                ps.setString(3, u.getSenha());
-                ps.setInt(4, u.getId());
+                ps.setString(2, u.getSenha());
+                ps.setInt(3, u.getId());
                 
                 // Executa a instrução de atualização do registro
                 ps.executeUpdate();
@@ -215,8 +207,7 @@ public class UsuarioDAO {
     public List<Usuario> pesquisar(Usuario u) throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT usuarios.*, tipoUsuario.nome FROM usuarios INNER JOIN tipoUsuario "
-                + "ON usuarios.tipoUsuarioId = tipoUsuario.id "
+        String sql = "SELECT * FROM usuarios "
                 + "WHERE usuario like ? ORDER BY ID ASC;";
 
         // Lista para receber os registros recuperados
@@ -240,15 +231,14 @@ public class UsuarioDAO {
                     // Atribui ao objeto Usuario os valores retornados do banco
                     u.setId(rs.getInt("id"));
                     u.setUsuario(rs.getString("usuario"));
-                    u.setCargo(rs.getString("nome"));
                     u.setSenha(rs.getString("senha"));
                     
 
                     // Adiciona o objeto Usuario na lista de usuarios
                     lstUsuario.add(u);
                 }
-            }catch (SQLException e) {}
-        }catch (SQLException e) {}
+            }
+        }
 
         // Fecha a conexão
         conexao.close();
@@ -267,9 +257,7 @@ public class UsuarioDAO {
     public List<Usuario> listar() throws SQLException {
 
         // Instrução SQL para recuperar os registros
-        String sql = "SELECT usuarios.*, tipoUsuario.nome FROM usuarios INNER JOIN tipoUsuario "
-                + "ON usuarios.tipoUsuarioId = tipoUsuario.id "
-                +"ORDER BY usuario ASC;";
+        String sql = "SELECT * FROM usuarios ORDER BY usuario ASC;";
 
         // Lista para receber os registros recuperados
         List lstUsuario = new ArrayList();
@@ -288,16 +276,14 @@ public class UsuarioDAO {
 
                 // Atribui ao objeto Usuario os valores retornados do banco
                 u.setId(rs.getInt("id"));
-                u.setTipoUsuarioId(rs.getInt("usuarios.tipoUsuarioId"));
                 u.setUsuario(rs.getString("usuario"));
-                u.setCargo(rs.getString("nome"));
                 u.setSenha(rs.getString("senha"));
                 
 
                 // Adiciona o objeto usuario na lista de usuarios
                 lstUsuario.add(u);
             }
-        }catch(SQLException e){ }
+        }
 
         // Fecha a conexão
         conexao.close();

@@ -9,10 +9,7 @@
             <div class="main_container">
                 <%@include file="sidebar.jsp"%>
                 <%@include file="topmenu.jsp"%>
-                <%@include file="view/produto/v_listagemProduto.jsp"%>
-                <%@include file="view/produto/v_listagemCadProd.jsp"%>
-                <%@include file="view/produto/v_listagemEdiProd.jsp"%>
-                <%@include file="view/produto/v_listagemExcProd.jsp"%>
+                <%@include file="view/produto/v_itemDetalhe.jsp"%>
                 <%@include file="footer.jsp"%>
                 <%@include file="script.jsp"%>
             </div>

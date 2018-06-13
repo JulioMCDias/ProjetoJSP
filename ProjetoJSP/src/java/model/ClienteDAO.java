@@ -1,9 +1,9 @@
 /**
- * model/PessoaDAO.java
+ * model/ClienteDAO.java
  */
 package model;
 
-import bean.Pessoa;
+import bean.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,9 +13,9 @@ import java.util.List;
 import utils.ConnectionFactory; 
 
 /**
- * Classe Model para o objeto Pessoa (CRUD)
+ * Classe Model para o objeto Cliente (CRUD)
  */
-public class PessoaDAO {
+public class ClienteDAO {
 
     // Variável para receber a conexão do banco de dados
     private final Connection conexao;
@@ -25,7 +25,7 @@ public class PessoaDAO {
      *
      * @throws java.sql.SQLException
      */
-    public PessoaDAO() throws SQLException {
+    public ClienteDAO() throws SQLException {
         // Recebe a conexão com o banco de dados
         this.conexao = ConnectionFactory.getInstance().getConnection();
     }
@@ -33,26 +33,26 @@ public class PessoaDAO {
     /**
      * Método inserir - Insere um novo registro no banco de dados
      *
-     * @param p Objeto Pessoa
+     * @param c Objeto Cliente
      * @return String Mensagem de sucesso ou erro na inclusão
      * @throws SQLException
      */
-    public String inserir(Pessoa p) throws SQLException {
+    public String inserir(Cliente c) throws SQLException {
 
         // Instrução SQL para inclusão do registro
-        String sql = "INSERT INTO clientes (nome, CPF, endereco,genero,telefone,datanasc) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO clientes (nome, endereco, cpf, email, telefone, datanasc) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
-                ps.setString(1, p.getNome());
-                ps.setString(2, p.getCPF());
-                ps.setString(3, p.getEndereco());
-                ps.setString(4, p.getGenero());
-                ps.setString(5, p.getTelefone());
-                ps.setString(6, p.getDatanasc());
+                ps.setString(1, c.getNome());
+                ps.setString(2, c.getEndereco());
+                ps.setString(3, c.getCpf());
+                ps.setString(4, c.getEmail());
+                ps.setString(5, c.getTelefone());
+                ps.setString(6, c.getDatanasc());
                         
                 // Executa a instrução de inclusão do registro
                 ps.execute();
@@ -74,24 +74,24 @@ public class PessoaDAO {
     /**
      * Método editar - Retorna o registro solicitado para edição
      *
-     * @param p Objeto Pessoa
+     * @param c Objeto Cliente
      * @return List Lista o registro encontrado
      * @throws java.sql.SQLException
      */
-    public List<Pessoa> editar(Pessoa p) throws SQLException {
+    public List<Cliente> editar(Cliente c) throws SQLException {
 
         // Instrução SQL para recuperar o registro
         String sql = "SELECT * FROM clientes "
                 + "WHERE id = ?";
 
         // Lista para receber o registro recuperado
-        List lstPessoa = new ArrayList();
+        List lstCliente = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
 
             // Inclui o id informado à instrução SQL
-            ps.setInt(1, p.getId());
+            ps.setInt(1, c.getId());
 
             // Avança o registro para recuperar os dados retornados do banco de dados
             try ( // Objeto que armazenará os dados recuperados (ResultSet)
@@ -103,21 +103,21 @@ public class PessoaDAO {
                  */
                 rs.next();
 
-                // Cria um objeto Pessoa
-                p = new Pessoa();
+                // Cria um objeto Cliente
+                c = new Cliente();
 
-                // Atribui ao objeto Pessoa os valores retornados do banco
+                // Atribui ao objeto Cliente os valores retornados do banco
 
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setCPF(rs.getString("CPF"));
-                p.setEndereco(rs.getString("endereco"));
-                p.setGenero(rs.getString("genero"));
-                p.setDatanasc(rs.getString("datanasc"));
-                p.setTelefone(rs.getString("telefone"));
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setEndereco(rs.getString("endereco"));
+                c.setCpf(rs.getString("cpf"));
+                c.setEmail(rs.getString("email"));
+                c.setDatanasc(rs.getString("datanasc"));
+                c.setTelefone(rs.getString("telefone"));
 
-                // Adiciona o objeto pessoa na lista
-                lstPessoa.add(p);
+                // Adiciona o objeto cliente na lista
+                lstCliente.add(c);
             }
         }
 
@@ -125,17 +125,17 @@ public class PessoaDAO {
         conexao.close();
 
         // Retorna a lista com o registro solicitado
-        return lstPessoa;
+        return lstCliente;
     }
 
     /**
      * Método excluir - Realiza a exclusão de um registro pelo ID informado
      *
-     * @param p Objeto Pessoa
+     * @param c Objeto Cliente
      * @return String Mensagem de sucesso ou erro na exclusão
      * @throws java.sql.SQLException
      */
-    public String excluir(Pessoa p) throws SQLException {
+    public String excluir(Cliente c) throws SQLException {
 
         // Instrução SQL para recuperar os registros
         String sql = "DELETE FROM clientes "
@@ -146,7 +146,7 @@ public class PessoaDAO {
                     PreparedStatement ps = conexao.prepareStatement(sql)) {
 
                 // Inclui o valor informado a ser atribuido à instrução SQL
-                ps.setInt(1, p.getId());
+                ps.setInt(1, c.getId());
 
                 // Executa a exclusão
                 ps.executeUpdate();
@@ -170,13 +170,13 @@ public class PessoaDAO {
      * Método alterar - Realiza a gravação (alteração) do registro no banco de
      * dados
      *
-     * @param p Objeto Pessoa
+     * @param c Objeto Cliente
      * @return Mensagem de sucesso ou erro na alteração (salvamento do registro)
      */
-    public String alterar(Pessoa p) {
+    public String alterar(Cliente c) {
         // Instrução SQL para atualização do registro
         String sql = "UPDATE clientes SET "
-                + "nome = ?, CPF = ?, endereco = ?, genero = ?, telefone = ?, datanasc = ? "
+                + "nome = ?, endereco = ?, cpf = ?, email = ?, telefone = ?, datanasc = ? "
                 + "WHERE id = ?;";
         try {
             try ( // Prepara a instrução SQL para ser enviada ao banco de dados
@@ -184,13 +184,13 @@ public class PessoaDAO {
 
                 // Inclui os valores a serem atribuidos à instrução SQL
                 
-                ps.setString(1, p.getNome());
-                ps.setString(2, p.getCPF());
-                ps.setString(3, p.getEndereco());
-                ps.setString(4, p.getGenero());
-                ps.setString(5, p.getTelefone());
-                ps.setString(6, p.getDatanasc());
-                ps.setInt(7, p.getId());
+                ps.setString(1, c.getNome());
+                ps.setString(2, c.getEndereco());
+                ps.setString(3, c.getCpf());
+                ps.setString(4, c.getEmail());
+                ps.setString(5, c.getTelefone());
+                ps.setString(6, c.getDatanasc());
+                ps.setInt(7, c.getId());
                 
                 // Executa a instrução de atualização do registro
                 ps.executeUpdate();
@@ -212,23 +212,23 @@ public class PessoaDAO {
     /**
      * Método Pesquisar - Realiza a pesquisa de um registro específico pelo ID
      *
-     * @param p Objeto Pessoa
+     * @param c Objeto Cliente
      * @return List Lista com registros encontrados
      * @throws java.sql.SQLException
      */
-    public List<Pessoa> pesquisar(Pessoa p) throws SQLException {
+    public List<Cliente> pesquisar(Cliente c) throws SQLException {
 
         // Instrução SQL para recuperar os registros
         String sql = "SELECT * FROM clientes "
                 + "WHERE nome like ? ORDER BY ID ASC;";
 
         // Lista para receber os registros recuperados
-        List lstPessoas = new ArrayList();
+        List lstClientes = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql)) {
             // Inclui o valor informado a ser atribuido à instrução SQL
-            ps.setString(1, p.getNome());
+            ps.setString(1, c.getNome());
 
             try ( // Objeto que armazenará os dados recuperados (recordSet)
                     ResultSet rs = ps.executeQuery()) {
@@ -237,20 +237,20 @@ public class PessoaDAO {
                  * lista
                  */
                 while (rs.next()) {
-                    // Cria um objeto Pessoa (bean)
-                    p = new Pessoa();
+                    // Cria um objeto Cliente (bean)
+                    c = new Cliente();
 
-                    // Atribui ao objeto Pessoa os valores retornados do banco
-                    p.setId(rs.getInt("id"));
-                    p.setNome(rs.getString("nome"));
-                    p.setCPF(rs.getString("CPF"));
-                    p.setEndereco(rs.getString("endereco"));
-                    p.setGenero(rs.getString("genero"));
-                    p.setTelefone(rs.getString("telefone"));
-                    p.setDatanasc(rs.getString("datanasc"));
+                    // Atribui ao objeto Cliente os valores retornados do banco
+                    c.setId(rs.getInt("id"));
+                    c.setNome(rs.getString("nome"));
+                    c.setEndereco(rs.getString("endereco"));
+                    c.setCpf(rs.getString("cpf"));
+                    c.setEmail(rs.getString("email"));
+                    c.setTelefone(rs.getString("telefone"));
+                    c.setDatanasc(rs.getString("datanasc"));
 
-                    // Adiciona o objeto Pessoa na lista de pessoas
-                    lstPessoas.add(p);
+                    // Adiciona o objeto Cliente na lista de clientes
+                    lstClientes.add(c);
                 }
             }
         }
@@ -258,8 +258,8 @@ public class PessoaDAO {
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as pessoas encontradas
-        return lstPessoas;
+        // Retorna a lista com os clientes encontrados
+        return lstClientes;
     }
 
     /**
@@ -269,13 +269,13 @@ public class PessoaDAO {
      * @throws java.sql.SQLException
      *
      */
-    public List<Pessoa> listar() throws SQLException {
+    public List<Cliente> listar() throws SQLException {
 
         // Instrução SQL para recuperar os registros
         String sql = "SELECT * FROM clientes ORDER BY nome ASC;";
 
         // Lista para receber os registros recuperados
-        List lstPessoas = new ArrayList();
+        List lstClientes = new ArrayList();
 
         try ( // Prepara a instrução SQL para ser enviada ao banco de dados
                 PreparedStatement ps = conexao.prepareStatement(sql);
@@ -283,30 +283,30 @@ public class PessoaDAO {
                 ResultSet rs = ps.executeQuery()) {
             /**
              * Percorre os registros retornados do banco de dados e coloca em
-             * uma lista (lstPessoas)
+             * uma lista (lstClientes)
              */
             while (rs.next()) {
-                // Cria um objeto Pessoa
-                Pessoa p = new Pessoa();
+                // Cria um objeto Cliente
+                Cliente c = new Cliente();
 
-                // Atribui ao objeto Pessoa os valores retornados do banco
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setCPF(rs.getString("CPF"));
-                p.setEndereco(rs.getString("endereco"));
-                p.setGenero(rs.getString("genero"));
-                p.setTelefone(rs.getString("telefone"));
-                p.setDatanasc(rs.getString("datanasc"));
+                // Atribui ao objeto Cliente os valores retornados do banco
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setEndereco(rs.getString("endereco"));
+                c.setCpf(rs.getString("cpf"));
+                c.setEmail(rs.getString("email"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setDatanasc(rs.getString("datanasc"));
 
-                // Adiciona o objeto Pessoa na lista de pessoas
-                lstPessoas.add(p);
+                // Adiciona o objeto Cliente na lista de clientes
+                lstClientes.add(c);
             }
         }
 
         // Fecha a conexão
         conexao.close();
 
-        // Retorna a lista com as pessoas encontradas
-        return lstPessoas;
+        // Retorna a lista com os clientes encontrados
+        return lstClientes;
     }
 }

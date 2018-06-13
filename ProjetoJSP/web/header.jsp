@@ -1,4 +1,5 @@
     <title>Sistema JSP</title>
+    <meta charset="utf-8">
     
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,3 +18,4 @@
     <link rel="stylesheet" type="text/css" href="datatables/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="datatables/css/responsive.jqueryui.min.css">
     <link rel="stylesheet" type="text/css" href="datatables/css/select.jqueryui.min.css">
+    <link rel="stylesheet" type="text/css" href="datatables/css/buttons.bootstrap.min.css">
